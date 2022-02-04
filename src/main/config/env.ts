@@ -28,4 +28,14 @@ export const env = {
       general: process.env.GENERAL_CHANNEL_ID as string,
     },
   },
+  databases: {
+    mongo: {
+      uri: process.env.MONGO_URI as string,
+      username: process.env.MONGO_USERNAME as string,
+      password: process.env.MONGO_PASSWORD as string,
+      dbPort: process.env.MONGO_DATABASE as string,
+      dbName: process.env.MONGO_DB_PORT as string,
+      host: process.env.MONGO_DB_HOST as string,
+    },
+  },
 };
