@@ -1,0 +1,50 @@
+import { PrismaClient } from '.prisma/client';
+import { List{{pascalCase name}}sFromDatabaseRepository } from '@/domain/usecases/{{dashCase name}}/list-{{dashCase name}}s-from-database/protocols';
+
+import { prismaConnector } from '@/infra/databases/postgres/prisma';
+import { PrismaFormatter } from '@/infra/databases/postgres/prisma/repositories/prisma-formatter';
+
+export class PrismaList{{pascalCase name}}sInDatabaseRepository
+  implements List{{pascalCase name}}sFromDatabaseRepository
+{
+  private prismaConnection: PrismaClient;
+
+  constructor() {
+    this.prismaConnection = prismaConnector.connect();
+  }
+
+  async count{{pascalCase name}}s(
+    {{camelCase name}}Filters: List{{pascalCase name}}sFromDatabaseRepository.Params
+  ): Promise<{ total{{pascalCase name}}s: number }> {
+    const {{camelCase name}}filterObject = PrismaFormatter.formatFilter({{camelCase name}}Filters);
+
+    const total{{pascalCase name}}s = await this.prismaConnection.{{camelCase name}}.count({
+      where: {{camelCase name}}filterObject,
+    });
+
+    return { total{{pascalCase name}}s };
+  }
+
+  async list(
+    {{camelCase name}}Filter: List{{pascalCase name}}sFromDatabaseRepository.Params
+  ): Promise<List{{pascalCase name}}sFromDatabaseRepository.Result> {
+    const { take, skip, orderBy, ...restOf{{pascalCase name}}Filters } = {{camelCase name}}Filter;
+
+    const {{camelCase name}}FilterObject = PrismaFormatter.formatFilter(restOf{{pascalCase name}}Filters);
+    const {{camelCase name}}FindOptions = PrismaFormatter.formatFindOptions({
+      take,
+      skip,
+      orderBy,
+    });
+
+    // @ts-ignore
+    const {{camelCase name}}s = await this.prismaConnection.{{camelCase name}}.findMany({
+      where: {{camelCase name}}FilterObject,
+      ...{{camelCase name}}FindOptions,
+    });
+
+    const { total{{pascalCase name}}s } = await this.count{{pascalCase name}}s(restOf{{pascalCase name}}Filters);
+
+    return { {{camelCase name}}s, total{{pascalCase name}}s };
+  }
+}

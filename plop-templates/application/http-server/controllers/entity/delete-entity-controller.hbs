@@ -1,0 +1,55 @@
+import { Controller, HttpResponse } from '@/application/http-server/protocols';
+
+import {
+  badRequest,
+  conflict,
+  ok,
+  serverError,
+} from '@/application/http-server/helpers/http-helper';
+
+import { Validation } from '@/application/validation/protocols';
+import { Delete{{pascalCase name}}FromDatabaseUsecase } from '@/domain/usecases/{{dashCase name}}';
+import { Delete{{pascalCase name}}FromDatabaseError } from '@/domain/usecases/{{dashCase name}}/delete-{{dashCase name}}-from-database/errors';
+import { {{pascalCase name}}Error } from '@/domain/entities/{{dashCase name}}'
+
+export class Delete{{pascalCase name}}Controller implements Controller {
+  private readonly validation: Validation;
+  private readonly delete{{pascalCase name}}FromDatabaseUsecase: Delete{{pascalCase name}}FromDatabaseUsecase;
+
+  constructor(
+    validation: Validation,
+    delete{{pascalCase name}}FromDatabaseUsecase: Delete{{pascalCase name}}FromDatabaseUsecase
+  ) {
+    this.validation = validation;
+    this.delete{{pascalCase name}}FromDatabaseUsecase = delete{{pascalCase name}}FromDatabaseUsecase;
+  }
+
+  async handle(
+    httpRequest: Delete{{pascalCase name}}Controller.Request
+  ): Promise<HttpResponse> {
+    try {
+      const hasError = this.validation.validate(httpRequest);
+
+      if (hasError) return badRequest(hasError);
+
+      await this.delete{{pascalCase name}}FromDatabaseUsecase.delete(httpRequest);
+
+      return ok();
+    } catch (error) {
+      const catchedError = error as Error;
+
+      if (
+        error instanceof Delete{{pascalCase name}}FromDatabaseError ||
+        error instanceof {{pascalCase name}}Error
+        ) {
+        return conflict(catchedError);
+      }
+
+      return serverError(catchedError);
+    }
+  }
+}
+
+export namespace Delete{{pascalCase name}}Controller {
+  export type Request = Delete{{pascalCase name}}FromDatabaseUsecase.Params;
+}

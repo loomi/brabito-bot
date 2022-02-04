@@ -1,0 +1,24 @@
+import { Update{{pascalCase name}}InDatabaseRepository } from '@/domain/usecases/{{dashCase name}}/update-{{dashCase name}}-in-database/protocols';
+import { prismaConnector } from '@/infra/databases/postgres/prisma';
+import { PrismaClient } from '@prisma/client';
+
+export class PrismaUpdate{{pascalCase name}}InDatabaseRepository
+  implements Update{{pascalCase name}}InDatabaseRepository
+{
+  private prismaConnection: PrismaClient;
+
+  constructor() {
+    this.prismaConnection = prismaConnector.connect();
+  }
+
+  async update(
+    {{camelCase name}}ToUpdate: Update{{pascalCase name}}InDatabaseRepository.Params
+  ): Promise<Update{{pascalCase name}}InDatabaseRepository.Result> {
+    const { id, ...restOf{{pascalCase name}}InJSON } = {{camelCase name}}ToUpdate;
+
+    await this.prismaConnection.{{camelCase name}}.update({
+      where: { id },
+      data: restOf{{pascalCase name}}InJSON,
+    });
+  }
+}

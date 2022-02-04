@@ -1,0 +1,52 @@
+import { Controller, HttpResponse } from '@/application/http-server/protocols';
+
+import {
+  badRequest,
+  ok,
+  conflict,
+  serverError,
+} from '@/application/http-server/helpers/http-helper';
+
+import { Validation } from '@/application/validation/protocols';
+import { List{{pascalCase name}}sFromDatabaseUsecase } from '@/domain/usecases/{{dashCase name}}';
+import { {{pascalCase name}}Error } from '@/domain/entities/{{dashCase name}}'
+
+export class List{{pascalCase name}}sController implements Controller {
+  private readonly validation: Validation;
+  private readonly list{{pascalCase name}}sFromDatabaseUsecase: List{{pascalCase name}}sFromDatabaseUsecase;
+
+  constructor(
+    validation: Validation,
+    list{{pascalCase name}}sFromDatabaseUsecase: List{{pascalCase name}}sFromDatabaseUsecase
+  ) {
+    this.validation = validation;
+    this.list{{pascalCase name}}sFromDatabaseUsecase = list{{pascalCase name}}sFromDatabaseUsecase;
+  }
+
+  async handle(
+    httpRequest: List{{pascalCase name}}sController.Request
+  ): Promise<HttpResponse> {
+    try {
+      const hasError = this.validation.validate(httpRequest);
+
+      if (hasError) return badRequest(hasError);
+
+      const { {{camelCase name}}s, total{{pascalCase name}}s } =
+        await this.list{{pascalCase name}}sFromDatabaseUsecase.list(httpRequest);
+
+      return ok({ {{camelCase name}}s, total{{pascalCase name}}s }, 'list');
+    } catch (error) {
+      const catchedError = error as Error;
+
+      if(error instanceof {{pascalCase name}}Error) {
+        return conflict(catchedError)
+      }
+
+      return serverError(catchedError);
+    }
+  }
+}
+
+export namespace List{{pascalCase name}}sController {
+  export type Request = List{{pascalCase name}}sFromDatabaseUsecase.Params;
+}

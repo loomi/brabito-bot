@@ -1,0 +1,23 @@
+import {
+  Create{{pascalCase name}}InDatabase,
+  Create{{pascalCase name}}InDatabaseUsecase,
+} from '@/domain/usecases/{{dashCase name}}/create-{{dashCase name}}-in-database';
+import { makePrismaSave{{pascalCase name}}InDatabaseRepository } from '@/main/factories/infra/databases/postgres/prisma/repositories/{{dashCase name}}';
+import { makeUUIDGeneratorAdapter } from '@/main/factories/infra/uuid';
+import { makeList{{pascalCase name}}sFromDatabaseUsecase } from '@/main/factories/usecases/{{dashCase name}}';
+
+export const makeCreate{{pascalCase name}}InDatabaseUsecase =
+  (): Create{{pascalCase name}}InDatabaseUsecase => {
+    const save{{pascalCase name}}InDatabaseRepository =
+      makePrismaSave{{pascalCase name}}InDatabaseRepository();
+
+    const list{{pascalCase name}}sFromDatabaseUsecase = makeList{{pascalCase name}}sFromDatabaseUsecase();
+
+    const UUIDGenerator = makeUUIDGeneratorAdapter();
+
+    return new Create{{pascalCase name}}InDatabase({
+      save{{pascalCase name}}InDatabaseRepository,
+      list{{pascalCase name}}sFromDatabaseUsecase,
+      UUIDGenerator,
+    });
+  };

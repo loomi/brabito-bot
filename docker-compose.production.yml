@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  api:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.production
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - ${API_PORT}:3001
+    volumes:
+      - ./src:/usr/app/src
+      - ./.env:/usr/app/.env

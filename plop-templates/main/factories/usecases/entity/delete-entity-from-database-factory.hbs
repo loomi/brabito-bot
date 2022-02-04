@@ -1,0 +1,19 @@
+import {
+  Delete{{pascalCase name}}FromDatabaseUsecase,
+  Delete{{pascalCase name}}FromDatabase,
+} from '@/domain/usecases/{{dashCase name}}/delete-{{dashCase name}}-from-database';
+import { makePrismaDelete{{pascalCase name}}FromDatabaseRepository } from '@/main/factories/infra/databases/postgres/prisma/repositories/{{dashCase name}}';
+import { makeList{{pascalCase name}}sFromDatabaseUsecase } from '@/main/factories/usecases/{{dashCase name}}';
+
+export const makeDelete{{pascalCase name}}FromDatabaseUsecase =
+  (): Delete{{pascalCase name}}FromDatabaseUsecase => {
+    const list{{pascalCase name}}sFromDatabaseUsecase = makeList{{pascalCase name}}sFromDatabaseUsecase();
+
+    const delete{{pascalCase name}}FromDatabaseRepository =
+      makePrismaDelete{{pascalCase name}}FromDatabaseRepository();
+
+    return new Delete{{pascalCase name}}FromDatabase({
+      list{{pascalCase name}}sFromDatabaseUsecase,
+      delete{{pascalCase name}}FromDatabaseRepository,
+    });
+  };

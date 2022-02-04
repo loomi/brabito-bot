@@ -1,0 +1,57 @@
+import { Controller, HttpResponse } from '@/application/http-server/protocols';
+
+import {
+  badRequest,
+  conflict,
+  serverError,
+  updated,
+} from '@/application/http-server/helpers/http-helper';
+
+import { Validation } from '@/application/validation/protocols';
+import { Update{{pascalCase name}}InDatabaseUsecase } from '@/domain/usecases/{{dashCase name}}';
+import { Update{{pascalCase name}}InDatabaseError } from '@/domain/usecases/{{dashCase name}}/update-{{dashCase name}}-in-database/errors';
+import { {{pascalCase name}}Error } from '@/domain/entities/{{dashCase name}}'
+
+export class Update{{pascalCase name}}Controller implements Controller {
+  private readonly validation: Validation;
+  private readonly update{{pascalCase name}}InDatabaseUsecase: Update{{pascalCase name}}InDatabaseUsecase;
+
+  constructor(
+    validation: Validation,
+    update{{pascalCase name}}InDatabaseUsecase: Update{{pascalCase name}}InDatabaseUsecase
+  ) {
+    this.validation = validation;
+    this.update{{pascalCase name}}InDatabaseUsecase = update{{pascalCase name}}InDatabaseUsecase;
+  }
+
+  async handle(
+    httpRequest: Update{{pascalCase name}}Controller.Request
+  ): Promise<HttpResponse> {
+    try {
+      const hasError = this.validation.validate(httpRequest);
+
+      if (hasError) return badRequest(hasError);
+
+      const {{camelCase name}}Updated = await this.update{{pascalCase name}}InDatabaseUsecase.update(
+        httpRequest
+      );
+
+      return updated({{camelCase name}}Updated);
+    } catch (error) {
+      const catchedError = error as Error;
+
+      if (
+        error instanceof Update{{pascalCase name}}InDatabaseError ||
+        error instanceof {{pascalCase name}}Error
+      ) {
+        return conflict(catchedError);
+      }
+
+      return serverError(catchedError);
+    }
+  }
+}
+
+export namespace Update{{pascalCase name}}Controller {
+  export type Request = Update{{pascalCase name}}InDatabaseUsecase.Params;
+}

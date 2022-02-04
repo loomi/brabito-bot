@@ -1,0 +1,7 @@
+import { Update{{pascalCase name}}InDatabaseRepository } from '@/domain/usecases/{{dashCase name}}/update-{{dashCase name}}-in-database/protocols';
+import { PrismaUpdate{{pascalCase name}}InDatabaseRepository } from '@/infra/databases/postgres/prisma/repositories/{{dashCase name}}';
+
+export const makePrismaUpdate{{pascalCase name}}InDatabaseRepository =
+  (): Update{{pascalCase name}}InDatabaseRepository => {
+    return new PrismaUpdate{{pascalCase name}}InDatabaseRepository();
+  };

@@ -1,0 +1,7 @@
+import { Save{{pascalCase name}}InDatabaseRepository } from '@/domain/usecases/{{dashCase name}}/create-{{dashCase name}}-in-database/protocols';
+import { PrismaSave{{pascalCase name}}InDatabaseRepository } from '@/infra/databases/postgres/prisma/repositories/{{dashCase name}}';
+
+export const makePrismaSave{{pascalCase name}}InDatabaseRepository =
+  (): Save{{pascalCase name}}InDatabaseRepository => {
+    return new PrismaSave{{pascalCase name}}InDatabaseRepository();
+  };

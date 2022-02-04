@@ -1,0 +1,21 @@
+import { Save{{pascalCase name}}InDatabaseRepository } from '@/domain/usecases/{{dashCase name}}/create-{{dashCase name}}-in-database/protocols';
+import { prismaConnector } from '@/infra/databases/postgres/prisma';
+import { PrismaClient } from '@prisma/client';
+
+export class PrismaSave{{pascalCase name}}InDatabaseRepository
+  implements Save{{pascalCase name}}InDatabaseRepository
+{
+  private prismaConnection: PrismaClient;
+
+  constructor() {
+    this.prismaConnection = prismaConnector.connect();
+  }
+
+  async save(
+    {{camelCase name}}Params: Save{{pascalCase name}}InDatabaseRepository.Params
+  ): Promise<Save{{pascalCase name}}InDatabaseRepository.Result> {
+    await this.prismaConnection.{{camelCase name}}.create({
+      data: {{camelCase name}}Params,
+    });
+  }
+}

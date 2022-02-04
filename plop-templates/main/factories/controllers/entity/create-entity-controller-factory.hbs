@@ -1,0 +1,22 @@
+import { Controller } from '@/application/http-server/protocols';
+import { Create{{pascalCase name}}Controller } from '@/application/http-server/controllers/{{dashCase name}}';
+
+import { makeCreate{{pascalCase name}}InDatabaseUsecase } from '@/main/factories/usecases/{{dashCase name}}';
+import { makeCreateBasicValidation } from '@/main/factories/validation/basic';
+import { makeLogControllerDecorator } from '@/main/factories/controllers';
+
+export const makeCreate{{pascalCase name}}Controller = (): Controller => {
+  const create{{pascalCase name}}Usecase = makeCreate{{pascalCase name}}InDatabaseUsecase();
+
+  const validation = makeCreateBasicValidation();
+
+  const create{{pascalCase name}}Controller = new Create{{pascalCase name}}Controller(
+    validation,
+    create{{pascalCase name}}Usecase
+  );
+
+  const create{{pascalCase name}}ControllerWithLogDecorator =
+    makeLogControllerDecorator(create{{pascalCase name}}Controller);
+
+  return create{{pascalCase name}}ControllerWithLogDecorator;
+};

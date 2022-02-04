@@ -1,0 +1,22 @@
+import { Controller } from '@/application/http-server/protocols';
+import { Delete{{pascalCase name}}Controller } from '@/application/http-server/controllers/{{dashCase name}}';
+
+import { makeDelete{{pascalCase name}}FromDatabaseUsecase } from '@/main/factories/usecases/{{dashCase name}}';
+import { makeDeleteBasicValidation } from '@/main/factories/validation/basic';
+import { makeLogControllerDecorator } from '@/main/factories/controllers';
+
+export const makeDelete{{pascalCase name}}Controller = (): Controller => {
+  const delete{{pascalCase name}}Usecase = makeDelete{{pascalCase name}}FromDatabaseUsecase();
+
+  const validation = makeDeleteBasicValidation();
+
+  const delete{{pascalCase name}}Controller = new Delete{{pascalCase name}}Controller(
+    validation,
+    delete{{pascalCase name}}Usecase
+  );
+
+  const delete{{pascalCase name}}ControllerWithLogDecorator =
+    makeLogControllerDecorator(delete{{pascalCase name}}Controller);
+
+  return delete{{pascalCase name}}ControllerWithLogDecorator;
+};

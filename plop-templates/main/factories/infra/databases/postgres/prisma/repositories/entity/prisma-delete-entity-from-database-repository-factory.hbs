@@ -1,0 +1,7 @@
+import { Delete{{pascalCase name}}FromDatabaseRepository } from '@/domain/usecases/{{dashCase name}}/delete-{{dashCase name}}-from-database/protocols';
+import { PrismaDelete{{pascalCase name}}FromDatabaseRepository } from '@/infra/databases/postgres/prisma/repositories/{{dashCase name}}';
+
+export const makePrismaDelete{{pascalCase name}}FromDatabaseRepository =
+  (): Delete{{pascalCase name}}FromDatabaseRepository => {
+    return new PrismaDelete{{pascalCase name}}FromDatabaseRepository();
+  };

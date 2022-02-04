@@ -1,0 +1,19 @@
+import {
+  Update{{pascalCase name}}InDatabaseUsecase,
+  Update{{pascalCase name}}InDatabase,
+} from '@/domain/usecases/{{dashCase name}}/update-{{dashCase name}}-in-database';
+import { makePrismaUpdate{{pascalCase name}}InDatabaseRepository } from '@/main/factories/infra/databases/postgres/prisma/repositories/{{dashCase name}}';
+import { makeList{{pascalCase name}}sFromDatabaseUsecase } from '@/main/factories/usecases/{{dashCase name}}';
+
+export const makeUpdate{{pascalCase name}}InDatabaseUsecase =
+  (): Update{{pascalCase name}}InDatabaseUsecase => {
+    const list{{pascalCase name}}sFromDatabaseUsecase = makeList{{pascalCase name}}sFromDatabaseUsecase();
+
+    const update{{pascalCase name}}InDatabaseRepository =
+      makePrismaUpdate{{pascalCase name}}InDatabaseRepository();
+
+    return new Update{{pascalCase name}}InDatabase({
+      list{{pascalCase name}}sFromDatabaseUsecase,
+      update{{pascalCase name}}InDatabaseRepository,
+    });
+  };

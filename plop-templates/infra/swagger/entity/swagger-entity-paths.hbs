@@ -1,0 +1,116 @@
+import { responses, filterParams } from '@/infra/swagger/helpers';
+
+export const {{camelCase name}}Paths = {
+  '/{{dashCase name}}s': {
+    get: {
+      tags: ['{{name}}s'],
+      summary: 'Get {{name}}s',
+      produces: ['application/json'],
+      parameters: [
+        {
+          in: 'query',
+          name: 'name',
+          schema: {
+            type: 'string',
+          },
+        },
+        ...filterParams
+      ],
+      security: [{ BearerAuth: [] }],
+      responses,
+    },
+    post: {
+      tags: ['{{name}}s'],
+      summary: 'Create a new {{camelCase name}}',
+      produces: ['application/json'],
+      requestBody: {
+        content: {
+          'application/json': {
+            schema: {
+              type: 'object',
+              properties: {
+                name: {
+                  type: 'string',
+                  required: true
+                }
+              }
+            },
+          },
+        },
+      },
+      security: [{ BearerAuth: [] }],
+      responses,
+    },
+  },
+  '/{{dashCase name}}s/{id}': {
+    get: {
+      tags: ['{{name}}s'],
+      summary: 'Get a {{name}}',
+      produces: ['application/json'],
+      parameters: [
+        {
+          in: 'path',
+          name: 'id',
+          schema: {
+            type: 'string',
+            format: 'uuid',
+          },
+          required: true,
+        },
+      ],
+      security: [{ BearerAuth: [] }],
+      responses,
+    },
+    patch: {
+      tags: ['{{name}}s'],
+      summary: 'Update a {{name}} by id',
+      produces: ['application/json'],
+      parameters: [
+        {
+          in: 'path',
+          name: 'id',
+          schema: {
+            type: 'string',
+            format: 'uuid',
+          },
+          required: true,
+        },
+      ],
+      requestBody: {
+        content: {
+          'application/json': {
+            schema: {
+              type: 'object',
+              properties: {
+                name: {
+                  type: 'string',
+                  required: true
+                }
+              }
+            },
+          },
+        },
+      },
+      security: [{ BearerAuth: [] }],
+      responses,
+    },
+    delete: {
+      tags: ['{{name}}s'],
+      summary: 'Delete a {{name}} by id',
+      produces: ['application/json'],
+      parameters: [
+        {
+          in: 'path',
+          name: 'id',
+          schema: {
+            type: 'string',
+            format: 'uuid',
+          },
+          required: true,
+        },
+      ],
+      security: [{ BearerAuth: [] }],
+      responses,
+    },
+  },
+};

@@ -1,0 +1,58 @@
+import { Controller, HttpResponse } from '@/application/http-server/protocols';
+
+import {
+  badRequest,
+  conflict,
+  created,
+  serverError,
+} from '@/application/http-server/helpers/http-helper';
+
+import { Validation } from '@/application/validation/protocols';
+import { Create{{pascalCase name}}InDatabaseUsecase } from '@/domain/usecases/{{dashCase name}}';
+import { Create{{pascalCase name}}InDatabaseError } from '@/domain/usecases/{{dashCase name}}/create-{{dashCase name}}-in-database/errors';
+import { {{pascalCase name}}Error } from '@/domain/entities/{{dashCase name}}'
+
+export class Create{{pascalCase name}}Controller implements Controller {
+  private readonly validation: Validation;
+  private readonly create{{pascalCase name}}InDatabaseUsecase: Create{{pascalCase name}}InDatabaseUsecase;
+
+  constructor(
+    validation: Validation,
+    create{{pascalCase name}}InDatabaseUsecase: Create{{pascalCase name}}InDatabaseUsecase
+  ) {
+    this.validation = validation;
+    this.create{{pascalCase name}}InDatabaseUsecase =
+      create{{pascalCase name}}InDatabaseUsecase;
+  }
+
+  async handle(
+    httpRequest: Create{{pascalCase name}}Controller.Request
+  ): Promise<HttpResponse> {
+    try {
+      const hasError = this.validation.validate(httpRequest);
+
+      if (hasError) return badRequest(hasError);
+
+      const new{{pascalCase name}} = await this.create{{pascalCase name}}InDatabaseUsecase.create(
+        httpRequest
+      );
+
+      return created(new{{pascalCase name}});
+    } catch (error) {
+      const catchedError = error as Error;
+
+      if (
+        error instanceof Create{{pascalCase name}}InDatabaseError ||
+        error instanceof {{pascalCase name}}Error
+      ) {
+        return conflict(catchedError);
+      }
+
+      return serverError(catchedError);
+    }
+  }
+}
+
+export namespace Create{{pascalCase name}}Controller {
+  export type Request = Create{{pascalCase name}}InDatabaseUsecase.Params;
+}

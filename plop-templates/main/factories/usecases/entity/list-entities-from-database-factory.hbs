@@ -1,0 +1,15 @@
+import {
+  List{{pascalCase name}}sFromDatabaseUsecase,
+  List{{pascalCase name}}sFromDatabase,
+} from '@/domain/usecases/{{dashCase name}}/list-{{dashCase name}}s-from-database';
+import { makePrismaList{{pascalCase name}}sFromDatabaseRepository } from '@/main/factories/infra/databases/postgres/prisma/repositories/{{dashCase name}}';
+
+export const makeList{{pascalCase name}}sFromDatabaseUsecase =
+  (): List{{pascalCase name}}sFromDatabaseUsecase => {
+    const list{{pascalCase name}}sFromDatabaseRepository =
+      makePrismaList{{pascalCase name}}sFromDatabaseRepository();
+
+    return new List{{pascalCase name}}sFromDatabase({
+      list{{pascalCase name}}sFromDatabaseRepository,
+    });
+  };

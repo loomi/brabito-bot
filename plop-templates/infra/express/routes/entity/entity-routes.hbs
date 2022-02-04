@@ -1,0 +1,21 @@
+import { adaptRoute } from '@/infra/express/adapters';
+
+import {
+  makeCreate{{pascalCase name}}Controller,
+  makeDelete{{pascalCase name}}Controller,
+  makeList{{pascalCase name}}sController,
+  makeUpdate{{pascalCase name}}Controller,
+} from '@/main/factories/controllers/{{dashCase name}}';
+
+import { Router } from 'express';
+
+import { authMiddleware } from '@/infra/express/middlewares';
+
+export default (router: Router): void => {
+  router
+    .route('/{{dashCase name}}s/:id?')
+    .get(authMiddleware('USER'), adaptRoute(makeList{{pascalCase name}}sController()))
+    .post(authMiddleware('ADMIN'), adaptRoute(makeCreate{{pascalCase name}}Controller()))
+    .patch(authMiddleware('USER'), adaptRoute(makeUpdate{{pascalCase name}}Controller()))
+    .delete(authMiddleware('ADMIN'), adaptRoute(makeDelete{{pascalCase name}}Controller()));
+};

@@ -1,0 +1,16 @@
+FROM node:lts-alpine3.13
+COPY . .
+RUN npm ci
+RUN npm run build:prod
+
+FROM node:lts-alpine3.13
+COPY package.json package-lock.json src/infra/databases/postgres/prisma/schema.prisma ./
+RUN npm ci --only=prod
+
+FROM node:lts-alpine3.13
+WORKDIR /usr/app
+COPY --from=0 dist/ dist/
+COPY --from=1 node_modules/ node_modules/
+COPY package.json package-lock.json ./
+EXPOSE 3000
+CMD ["npm", "run", "start:prod"]
