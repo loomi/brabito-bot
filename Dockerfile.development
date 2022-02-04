@@ -1,5 +1,5 @@
 FROM node:lts-alpine3.13
-COPY package.json package-lock.json src/infra/databases/postgres/prisma/schema.prisma ./
+COPY package.json package-lock.json ./
 RUN npm ci
 
 FROM node:lts-alpine3.13

@@ -7,8 +7,8 @@
     "build": "rimraf dist && tsc -p tsconfig-build.json",
     "build:prod": "tsc -p tsconfig-build.json",
     "start": "node dist/main/server.js",
-    "start:dev": "npm run prisma:migration:push && npx nodemon --exec 'npm run build && node dist/main/server.js' --watch src -e ts",
-    "start:prod": "npm run prisma:migration:push && npm start",
+    "start:dev": "npx nodemon --exec 'npm run build && node dist/main/server.js' --watch src -e ts",
+    "start:prod": "npm start",
     "lint": "eslint 'src/**' '__tests__/**'",
     "lint:fix": "eslint 'src/**' '__tests__/**' --fix",
     "style:check": "prettier --check 'src/**/*.ts' '__tests__/**/*.ts'",
@@ -19,11 +19,6 @@
     "test:integration": "npm test -- --watch -c jest-integration-config.js --verbose",
     "test:staged": "npm test -- --findRelatedTests",
     "test:ci": "npm test -- --coverage",
-    "prisma:generate": "npx prisma generate --schema=./src/infra/databases/postgres/prisma/schema.prisma",
-    "prisma:migration": "npx prisma migrate dev --schema=./src/infra/databases/postgres/prisma/schema.prisma --name",
-    "prisma:migration:push": "npx prisma migrate deploy --schema=./src/infra/databases/postgres/prisma/schema.prisma",
-    "prisma:introspect": "npx prisma introspect --force --schema=./src/infra/databases/postgres/prisma/schema.prisma && npm run prisma:generate",
-    "prisma:push": "npx prisma db push --schema=./src/infra/databases/postgres/prisma/schema.prisma --accept-data-loss",
     "prepare": "husky install",
     "plop": "plop"
   },
@@ -69,10 +64,8 @@
     "typescript": "^4.4.4"
   },
   "dependencies": {
-    "@prisma/client": "^3.3.0",
     "@sentry/node": "^6.14.0",
     "@sentry/tracing": "^6.14.0",
-    "aws-sdk": "^2.1023.0",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
@@ -80,7 +73,6 @@
     "module-alias": "^2.2.2",
     "pino": "^7.1.0",
     "pino-http": "^6.0.0",
-    "prisma": "^3.4.1",
     "swagger-ui-express": "^4.1.6",
     "uuid": "^8.3.2",
     "validator": "^13.7.0"

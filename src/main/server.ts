@@ -2,8 +2,6 @@ import 'module-alias/register';
 
 import { env } from '@/main/config';
 
-import { prismaConnector } from '@/infra/databases/postgres/prisma';
-
 import { expressHttpServer } from '@/infra/express';
 
 import { makePinoLoggerLocalAdapter } from './factories/infra/logs/pino';
@@ -39,11 +37,6 @@ process.on('uncaughtException', (error) => {
 
 async function main() {
   try {
-    prismaConnector.connect();
-    loggerLocal.logInfo(
-      `Prisma connect with success to ${env.databases.postgres.url}`
-    );
-
     expressHttpServer.listen(env.httpServer.port, () =>
       loggerLocal.logInfo(
         `Server runing at http://localhost:${env.httpServer.port}`
@@ -55,7 +48,6 @@ async function main() {
       process.on(sig, async () => {
         try {
           expressHttpServer.close();
-          await prismaConnector.disconnect();
 
           loggerLocal.logInfo('App exit with success');
           process.exit(exitStatus.Success);

@@ -1,19 +1,13 @@
 import { tags, servers, securitySchemes } from '@/infra/swagger/helpers';
 
-import { authPaths, userPaths } from '@/infra/swagger/paths';
+// import {  } from '@/infra/swagger/paths';
 
-import {
-  loginSchema,
-  firstLoginSchema,
-  firstAccessSchema,
-  createUserSchema,
-  updateUserSchema,
-} from '@/infra/swagger/schemas';
+// import { } from '@/infra/swagger/schemas';
 
 export default {
   openapi: '3.0.0',
   info: {
-    title: 'Node Leap API',
+    title: 'Untitled-b API',
     version: '1.0.0',
     description: 'API',
     contact: {
@@ -23,15 +17,10 @@ export default {
   servers,
   tags,
   paths: {
-    ...authPaths,
-    ...userPaths,
+    // ...examplePaths,
   },
   schemas: {
-    createUserSchema: createUserSchema,
-    updateUserSchema: updateUserSchema,
-    firstAccess: firstAccessSchema,
-    loginSchema: loginSchema,
-    firstLoginSchema: firstLoginSchema,
+    // exampleSchema: exampleSchema,
   },
   components: {
     securitySchemes,
