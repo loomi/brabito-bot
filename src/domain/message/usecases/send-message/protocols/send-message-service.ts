@@ -1,4 +1,4 @@
-import { MessageData } from '@/domain/entities/message/MessageData';
+import { MessageData } from '@/domain/message/MessageData';
 
 export interface SendMessageService {
   send(message: MessageData): Promise<void>;

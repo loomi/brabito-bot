@@ -1,6 +1,6 @@
-import { MessageData } from '@/domain/entities/message/MessageData';
-import { SendMessageService } from '../protocols/message';
+import { MessageData } from '../../MessageData';
 import { SendMessageUsecase } from './send-message-usecase';
+import { SendMessageService } from './protocols';
 
 export class SendMessage implements SendMessageUsecase {
   private readonly sendMessageService: SendMessageService;
