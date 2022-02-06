@@ -1,5 +1,5 @@
 import cron from 'node-cron';
-import { Scheduler } from '@/domain/usecases/protocols/recurrence';
+import { Scheduler } from '@/shared/recurrence';
 
 export class NodeCronScheduler implements Scheduler {
   schedule(task: any, time: string) {

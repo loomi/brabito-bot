@@ -1,5 +1,5 @@
-import { SendMessageService } from '@/domain/usecases/protocols/message';
-import { SendMessage } from '@/domain/usecases/send-message/send-message';
+import { SendMessageService } from '@/domain/message/usecases/send-message/protocols';
+import { SendMessage } from '@/domain/message/usecases/send-message';
 import { makeDiscordSendMessageService } from '../../infra/discord/discord-send-message-service-factory';
 
 export const makeSendMessage = (): SendMessageService => {
