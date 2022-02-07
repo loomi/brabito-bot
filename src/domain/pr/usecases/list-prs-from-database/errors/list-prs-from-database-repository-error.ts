@@ -1,8 +1,8 @@
-class ListUsersFromDatabaseRepositoryError extends Error {
+class ListPrsFromDatabaseRepositoryError extends Error {
   constructor(message: string) {
     super(message);
-    this.name = 'ListUsersFromDatabaseRepositoryError';
+    this.name = 'ListPrsFromDatabaseRepositoryError';
   }
 }
 
-export { ListUsersFromDatabaseRepositoryError };
+export { ListPrsFromDatabaseRepositoryError };
