@@ -3,7 +3,7 @@ import 'module-alias/register';
 import { env } from '@/main/config';
 
 import { expressHttpServer } from '@/infra/express';
-import { mongoHandler } from '@/infra/databases/mongo';
+import { prismaConnector } from '@/infra/database/orm/prisma';
 
 import { makePinoLoggerLocalAdapter } from './factories/infra/logs/pino';
 import { makeSentryLoggerErrorCloudAdapter } from './factories/infra/logs/sentry';
@@ -38,8 +38,10 @@ process.on('uncaughtException', (error) => {
 
 async function main() {
   try {
-    await mongoHandler.createConnection();
-    loggerLocal.logInfo('MongoDB connected successfully!');
+    prismaConnector.connect();
+    loggerLocal.logInfo(
+      `Prisma connect with success to ${env.databases.prisma.databaseUrl}`
+    );
 
     expressHttpServer.listen(env.httpServer.port, () =>
       loggerLocal.logInfo(
@@ -52,7 +54,7 @@ async function main() {
       process.on(sig, async () => {
         try {
           expressHttpServer.close();
-          await mongoHandler.closeConnection();
+          await prismaConnector.disconnect();
 
           loggerLocal.logInfo('App exit with success');
           process.exit(exitStatus.Success);

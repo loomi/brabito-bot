@@ -37,5 +37,8 @@ export const env = {
       dbName: process.env.MONGO_DB_PORT as string,
       host: process.env.MONGO_DB_HOST as string,
     },
+    prisma: {
+      databaseUrl: process.env.PRISMA_URL as string,
+    },
   },
 };
