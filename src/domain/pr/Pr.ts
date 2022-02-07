@@ -13,34 +13,47 @@ class Pr {
   private readonly createdAt: Date;
   private updatedAt: Date;
 
-  constructor(createPrParams: PrInput) {
-    const {
-      id,
-      title,
-      status,
-      githubId,
-      discordId,
-      urgenceLevel,
-      user,
-      createdAt,
-      updatedAt,
-    } = createPrParams;
-
-    if (id === null || id === undefined) {
+  constructor(prms: { createPrParams?: PrInput; createPrFromParams?: PrData }) {
+    if (
+      (prms.createPrParams?.id === null ||
+        prms.createPrParams?.id === undefined) &&
+      !prms.createPrFromParams?.id
+    ) {
       throw new PrError('ID is not passed');
     }
 
-    if (status === null || status === undefined) {
+    if (
+      (prms.createPrParams?.status === null ||
+        prms.createPrParams?.status === undefined) &&
+      !prms.createPrFromParams?.status
+    ) {
       throw new PrError('Name is not passed');
     }
 
-    this.id = id;
-    this.status = this.convertStatus(status, title, user);
-    this.githubId = githubId;
-    this.discordId = discordId;
-    this.urgenceLevel = urgenceLevel;
-    this.createdAt = createdAt || new Date();
-    this.updatedAt = updatedAt || new Date();
+    this.id = prms.createPrFromParams?.id || prms.createPrParams?.id || '';
+    this.status =
+      prms.createPrFromParams?.status ||
+      this.convertStatus(
+        prms.createPrParams?.status || 'open',
+        prms.createPrParams?.title || '',
+        prms.createPrParams?.user
+      );
+    this.githubId =
+      prms.createPrFromParams?.githubId || prms.createPrParams?.githubId || '';
+    this.discordId =
+      prms.createPrFromParams?.discordId || prms.createPrParams?.discordId;
+    this.urgenceLevel =
+      prms.createPrFromParams?.urgenceLevel ||
+      prms.createPrParams?.urgenceLevel ||
+      'important';
+    this.createdAt =
+      prms.createPrFromParams?.createdAt ||
+      prms.createPrParams?.createdAt ||
+      new Date();
+    this.updatedAt =
+      prms.createPrFromParams?.updatedAt ||
+      prms.createPrParams?.updatedAt ||
+      new Date();
   }
 
   private convertStatus(
@@ -85,9 +98,45 @@ class Pr {
     this.updatedAt = new Date();
   }
 
-  updateStatus(status: PrInput['status'], title: PrInput['title']) {
-    this.status = this.convertStatus(status, title, this.user);
+  updateStatus(status: PrData['status']) {
+    this.status = status;
     this.updatePrTime();
+  }
+
+  updateUrgenceLevel(urgenceLevel: PrData['urgenceLevel']) {
+    if (urgenceLevel !== 'important' && urgenceLevel !== 'urgent') return;
+    this.urgenceLevel = urgenceLevel;
+    this.updatePrTime();
+  }
+
+  updateGithubId(githubId: PrData['githubId']) {
+    this.githubId = githubId;
+    this.updatePrTime();
+  }
+
+  updateDiscordId(discordId: PrData['discordId']) {
+    this.discordId = discordId;
+    this.updatePrTime();
+  }
+
+  updateParams(paramsToUpdate: Partial<PrData>): Pr {
+    const entriesOfParamsToUpdate = Object.entries(paramsToUpdate);
+
+    const filteredEntriesToUpdateClient = entriesOfParamsToUpdate.filter(
+      ([key, value]) => value !== undefined && value !== null
+    );
+
+    filteredEntriesToUpdateClient.forEach(([property, value]) => {
+      if (property === 'status') this.updateStatus(value as PrData['status']);
+      if (property === 'urgenceLevel')
+        this.updateUrgenceLevel(value as PrData['urgenceLevel']);
+      if (property === 'githubId')
+        this.updateGithubId(value as PrData['githubId']);
+      if (property === 'discordId')
+        this.updateDiscordId(value as PrData['discordId']);
+    });
+
+    return this;
   }
 
   getId(): string {
