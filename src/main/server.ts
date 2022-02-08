@@ -3,6 +3,7 @@ import 'module-alias/register';
 import { env } from '@/main/config';
 
 import { expressHttpServer } from '@/infra/express';
+import { discordBot } from '@/infra/discord';
 import { prismaConnector } from '@/infra/database/orm/prisma';
 
 import { makePinoLoggerLocalAdapter } from './factories/infra/logs/pino';
@@ -49,12 +50,16 @@ async function main() {
       )
     );
 
+    await discordBot.start();
+    loggerLocal.logInfo('Brabito is on to listen your wishes!');
+
     const exitSignals: NodeJS.Signals[] = ['SIGINT', 'SIGTERM', 'SIGQUIT'];
     exitSignals.map((sig) =>
       process.on(sig, async () => {
         try {
           expressHttpServer.close();
           await prismaConnector.disconnect();
+          discordBot.close();
 
           loggerLocal.logInfo('App exit with success');
           process.exit(exitStatus.Success);
