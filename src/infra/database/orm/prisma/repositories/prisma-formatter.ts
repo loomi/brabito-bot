@@ -81,7 +81,7 @@ export class PrismaFormatter {
       orderBy:
         orderBy?.property !== undefined && orderBy?.mode !== undefined
           ? { [orderBy.property]: orderBy.mode }
-          : { createdAt: 'desc' },
+          : { createdAt: 'desc' as 'desc' },
     };
 
     return findOptionsObject;

@@ -28,9 +28,9 @@ export class PrismaListUsersInDatabaseRepository {
       const users = await this.prismaConnection.user.findMany({
         where: restOfUserFilterObject,
         ...userFindOptions,
-        include: {
-          prs: true,
-        },
+        // include: {
+        //   prs: true,
+        // },
       });
 
       const totalUsers = await this.prismaConnection.user.count({

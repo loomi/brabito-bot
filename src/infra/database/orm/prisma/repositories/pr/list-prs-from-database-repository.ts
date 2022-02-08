@@ -28,9 +28,6 @@ export class PrismaListPrsFromDatabaseRepository {
       const prs = await this.prismaConnection.pr.findMany({
         where: restOfPrFilterObject,
         ...prFindOptions,
-        include: {
-          prs: true,
-        },
       });
 
       const totalPrs = await this.prismaConnection.pr.count({
