@@ -1,15 +1,14 @@
 import { PrInput } from './PrInput';
 import { PrError } from './PrError';
 import { PrData } from './PrData';
-import { User } from '../user';
 
 class Pr {
   private readonly id: string;
   private status: PrData['status'];
   private githubId: string;
   private urgenceLevel: PrData['urgenceLevel'];
-  private discordId?: string;
-  private user?: User;
+  private discordId: string;
+  private userId: PrData['userId'];
   private readonly createdAt: Date;
   private updatedAt: Date;
 
@@ -36,12 +35,14 @@ class Pr {
       this.convertStatus(
         prms.createPrParams?.status || 'open',
         prms.createPrParams?.title || '',
-        prms.createPrParams?.user
+        prms.createPrParams?.userId || prms.createPrFromParams?.userId || null
       );
     this.githubId =
       prms.createPrFromParams?.githubId || prms.createPrParams?.githubId || '';
     this.discordId =
-      prms.createPrFromParams?.discordId || prms.createPrParams?.discordId;
+      prms.createPrFromParams?.discordId ||
+      prms.createPrParams?.discordId ||
+      '';
     this.urgenceLevel =
       prms.createPrFromParams?.urgenceLevel ||
       prms.createPrParams?.urgenceLevel ||
@@ -50,6 +51,8 @@ class Pr {
       prms.createPrFromParams?.createdAt ||
       prms.createPrParams?.createdAt ||
       new Date();
+    this.userId =
+      prms.createPrFromParams?.userId || prms.createPrParams?.userId || null;
     this.updatedAt =
       prms.createPrFromParams?.updatedAt ||
       prms.createPrParams?.updatedAt ||
@@ -59,7 +62,7 @@ class Pr {
   private convertStatus(
     githubStatus: PrInput['status'],
     githubTitle: PrInput['title'],
-    user?: User
+    userId: PrInput['userId']
   ): PrData['status'] {
     if (githubTitle.toLocaleLowerCase().match('wip')) return 'wip';
     else if (githubStatus === 'open') return 'not_allocated';
@@ -67,14 +70,14 @@ class Pr {
     else if (githubStatus === 'review requested') return 'changes_requested';
     else if (githubStatus === 'approved') return 'approved';
     else if (githubStatus === 'merged') return 'merged';
-    else if (!user) {
+    else if (!userId) {
       if (githubStatus === 'reopened') return 'not_allocated';
-      else if (githubStatus === 'review request removed' && !user)
+      else if (githubStatus === 'review request removed' && !userId)
         return 'not_allocated';
       else if (githubStatus === 'ready for review') return 'not_allocated';
     } else {
       if (githubStatus === 'reopened') return 'allocated';
-      else if (githubStatus === 'review request removed' && !user)
+      else if (githubStatus === 'review request removed' && !userId)
         return 'allocated';
       else if (githubStatus === 'ready for review') return 'allocated';
     }
@@ -89,7 +92,7 @@ class Pr {
       urgenceLevel: this.urgenceLevel,
       discordId: this.discordId,
       githubId: this.githubId,
-      user: this.user,
+      userId: this.userId,
       updatedAt: this.updatedAt,
     };
   }

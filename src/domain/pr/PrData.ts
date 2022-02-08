@@ -1,5 +1,3 @@
-import { User } from '../user';
-
 export type PrData = {
   id: string;
   status:
@@ -12,8 +10,8 @@ export type PrData = {
     | 'merged';
   urgenceLevel: 'urgent' | 'important';
   githubId: string;
-  discordId?: string;
-  user?: User;
+  discordId: string;
+  userId: string | null;
   createdAt: Date;
   updatedAt: Date;
 };

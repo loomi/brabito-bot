@@ -1,5 +1,3 @@
-import { User } from '../user';
-
 export type PrInput = {
   id: string;
   title: string;
@@ -14,8 +12,8 @@ export type PrInput = {
     | 'merged';
   urgenceLevel: 'urgent' | 'important';
   githubId: string;
-  discordId?: string;
-  user?: User;
+  discordId: string;
+  userId: string | null;
   createdAt?: Date;
   updatedAt?: Date;
 };
