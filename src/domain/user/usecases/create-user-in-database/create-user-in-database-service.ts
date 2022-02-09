@@ -32,6 +32,8 @@ class CreateUserInDatabaseService implements CreateUserUsecase {
       discordId,
     });
 
+    await this.createUserInDatabaseRepository.createUser(newUser);
+
     return newUser;
   }
 }
