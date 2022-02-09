@@ -20,6 +20,7 @@ export class PrismaCreatePrInDatabaseRepository
       const pr = prParams;
       const prParamsInJSON = pr.toJSON();
 
+      delete prParamsInJSON.user;
       await this.prismaConnection.pr.create({
         data: prParamsInJSON,
       });

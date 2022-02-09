@@ -11,9 +11,6 @@ export class ProjectUpdateController implements Controller {
 
   async handle(httpRequest: any): Promise<HttpResponse> {
     try {
-      console.log('=========================================================');
-      console.log(httpRequest);
-      console.log('=========================================================');
       await this.prsWebhookHandler.createOrUpdatePr(httpRequest);
 
       return ok();

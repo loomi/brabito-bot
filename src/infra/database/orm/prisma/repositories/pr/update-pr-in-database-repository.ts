@@ -18,6 +18,7 @@ export class PrismaUpdatePrInDatabaseRepository
     try {
       const { id, ...restOfPrInJSON } = prToUpdate.toJSON();
 
+      delete restOfPrInJSON.user;
       await this.prismaConnection.pr.update({
         where: { id },
         data: restOfPrInJSON,
