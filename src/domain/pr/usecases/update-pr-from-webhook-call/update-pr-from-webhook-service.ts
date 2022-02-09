@@ -52,8 +52,14 @@ class UpdatePrFromWebhookCallService implements UpdatePrFromWebhookCallUsecase {
       (label: any) => label.name === 'urgent'
     );
 
+    const reviewRequestedOrApproved =
+      prParams?.review?.state === 'approved' ? 'approved' : 'changes-requested';
+
+    const statusToSend =
+      status !== 'submitted' ? status : reviewRequestedOrApproved;
+
     const prUpdated = prFounded.updateParams({
-      status,
+      status: statusToSend,
       urgenceLevel: isUrgentPr ? 'urgent' : 'important',
       title,
       userId: prFounded.toJSON().userId,

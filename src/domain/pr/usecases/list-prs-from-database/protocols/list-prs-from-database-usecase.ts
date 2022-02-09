@@ -11,7 +11,8 @@ export namespace ListPrsUsecase {
     urgencyLevel?: PrData['urgenceLevel'];
     githubId?: PrData['githubId'];
     discordId?: PrData['discordId'];
-    userDiscordId?: string;
+    userGithubNick?: string;
+    projectName?: string;
     createdAt?: { inititalDate: string; finalDate: string };
     updatedAt?: { inititalDate: string; finalDate: string };
     take?: number;

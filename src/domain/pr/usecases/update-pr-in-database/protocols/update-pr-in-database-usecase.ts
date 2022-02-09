@@ -1,4 +1,4 @@
-import { Pr, PrData } from '@/domain/pr';
+import { Pr, PrData, PrInput } from '@/domain/pr';
 
 export interface UpdatePrUsecase {
   update(prParams: UpdatePrUsecase.Params): Promise<UpdatePrUsecase.Result>;
@@ -7,11 +7,11 @@ export interface UpdatePrUsecase {
 export namespace UpdatePrUsecase {
   export type Params = {
     id: string;
-    status?: PrData['status'];
+    status?: PrInput['status'];
     urgencyLevel?: PrData['urgenceLevel'];
     githubId?: PrData['githubId'];
     discordId?: PrData['discordId'];
-    userDiscordId?: string;
+    userId?: string;
   };
   export type Result = Pr | Error;
 }
