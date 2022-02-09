@@ -4,14 +4,16 @@ import { ListPrsFromDatabaseRepository } from '@/domain/pr/usecases/list-prs-fro
 import { prismaConnector } from '@/infra/database/orm/prisma';
 import { PrismaFormatter } from '../prisma-formatter';
 
-export class PrismaListPrsFromDatabaseRepository {
+export class PrismaListPrsFromDatabaseRepository
+  implements ListPrsFromDatabaseRepository
+{
   private prismaConnection: PrismaClient;
 
   constructor() {
     this.prismaConnection = prismaConnector.connect();
   }
 
-  async listPr(
+  async listPrs(
     prFilter: ListPrsFromDatabaseRepository.Params
   ): Promise<ListPrsFromDatabaseRepository.Result> {
     try {
@@ -28,6 +30,9 @@ export class PrismaListPrsFromDatabaseRepository {
       const prs = await this.prismaConnection.pr.findMany({
         where: restOfPrFilterObject,
         ...prFindOptions,
+        include: {
+          user: true,
+        },
       });
 
       const totalPrs = await this.prismaConnection.pr.count({

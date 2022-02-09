@@ -14,14 +14,6 @@ export class PrismaFormatter {
           return [key, value];
         }
 
-        if (typeof value === 'string' && key !== 'id') {
-          return [key, { contains: value, mode: 'insensitive' }];
-        }
-
-        if (typeof value === 'string' && key !== 'id') {
-          return [key, { contains: value, mode: 'insensitive' }];
-        }
-
         if (value instanceof Array) {
           return [listParamsToConvertKey.get(key), { id: { in: value } }];
         }
