@@ -12,7 +12,9 @@ export type PrInput = {
     | 'merged';
   urgenceLevel: 'urgent' | 'important';
   githubId: string;
+  projectName: string;
   discordId: string;
+  userGithubNick: string;
   userId: string | null;
   createdAt?: Date;
   updatedAt?: Date;

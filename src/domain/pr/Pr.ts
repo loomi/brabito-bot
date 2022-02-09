@@ -5,10 +5,13 @@ import { PrData } from './PrData';
 class Pr {
   private readonly id: string;
   private status: PrData['status'];
-  private githubId: string;
   private urgenceLevel: PrData['urgenceLevel'];
+  private userGithubNick: PrData['userGithubNick'];
+  private projectName: PrData['projectName'];
   private discordId: string;
+  private githubId: string;
   private userId: PrData['userId'];
+  private user: PrData['user'];
   private readonly createdAt: Date;
   private updatedAt: Date;
 
@@ -43,10 +46,19 @@ class Pr {
       prms.createPrFromParams?.discordId ||
       prms.createPrParams?.discordId ||
       '';
+    this.projectName =
+      prms.createPrFromParams?.projectName ||
+      prms.createPrParams?.projectName ||
+      '';
     this.urgenceLevel =
       prms.createPrFromParams?.urgenceLevel ||
       prms.createPrParams?.urgenceLevel ||
       'important';
+    this.userGithubNick =
+      prms.createPrFromParams?.userGithubNick ||
+      prms.createPrParams?.userGithubNick ||
+      '';
+    this.user = prms.createPrFromParams?.user || null;
     this.createdAt =
       prms.createPrFromParams?.createdAt ||
       prms.createPrParams?.createdAt ||
@@ -64,24 +76,74 @@ class Pr {
     githubTitle: PrInput['title'],
     userId: PrInput['userId']
   ): PrData['status'] {
-    if (githubTitle.toLocaleLowerCase().match('wip')) return 'wip';
-    else if (githubStatus === 'open') return 'not_allocated';
-    else if (githubStatus === 'closed') return 'closed';
-    else if (githubStatus === 'review requested') return 'changes_requested';
-    else if (githubStatus === 'approved') return 'approved';
-    else if (githubStatus === 'merged') return 'merged';
-    else if (!userId) {
-      if (githubStatus === 'reopened') return 'not_allocated';
-      else if (githubStatus === 'review request removed' && !userId)
-        return 'not_allocated';
-      else if (githubStatus === 'ready for review') return 'not_allocated';
+    console.log(
+      '============================================> this is the status',
+      githubStatus
+    );
+    console.log(
+      '============================================> this is the title',
+      githubTitle
+    );
+
+    if (githubTitle.toLocaleLowerCase().match('wip')) {
+      console.log(
+        '============================================> shouldReturn = WIP # 1'
+      );
+      return 'wip';
+    } else if (githubStatus === 'open') {
+      console.log(
+        '============================================> shouldReturn = NOT_ALLOCATED # 1'
+      );
+      return 'not_allocated';
+    } else if (githubStatus === 'closed') {
+      console.log(
+        '============================================> shouldReturn = CLOSED'
+      );
+      return 'closed';
+    } else if (githubStatus === 'review requested') {
+      console.log(
+        '============================================> shouldReturn = CHANGES_REQUESTED'
+      );
+      return 'changes_requested';
+    } else if (githubStatus === 'approved') {
+      console.log(
+        '============================================> shouldReturn = APPROVED'
+      );
+      return 'approved';
+    } else if (githubStatus === 'merged') {
+      console.log(
+        '============================================> shouldReturn = MERGED'
+      );
+      return 'merged';
     } else {
-      if (githubStatus === 'reopened') return 'allocated';
-      else if (githubStatus === 'review request removed' && !userId)
-        return 'allocated';
-      else if (githubStatus === 'ready for review') return 'allocated';
+      if (
+        !userId &&
+        (githubStatus === 'reopened' ||
+          githubStatus === 'review request removed' ||
+          githubStatus === 'ready for review')
+      ) {
+        console.log(
+          '============================================> shouldReturn = NOT_ALLOCATED # 2'
+        );
+        return 'not_allocated';
+      } else {
+        if (
+          userId &&
+          (githubStatus === 'reopened' ||
+            githubStatus === 'review request removed' ||
+            githubStatus === 'ready for review')
+        ) {
+          console.log(
+            '============================================> shouldReturn = ALLOCATED'
+          );
+          return 'allocated';
+        }
+      }
     }
-    return 'wip';
+    console.log(
+      '============================================> shouldReturn = PREVIOUS STATUS'
+    );
+    return this.status;
   }
 
   toJSON(): PrData {
@@ -90,8 +152,11 @@ class Pr {
       status: this.status,
       createdAt: this.createdAt,
       urgenceLevel: this.urgenceLevel,
+      userGithubNick: this.userGithubNick,
+      projectName: this.projectName,
       discordId: this.discordId,
       githubId: this.githubId,
+      user: this.user,
       userId: this.userId,
       updatedAt: this.updatedAt,
     };
@@ -122,7 +187,7 @@ class Pr {
     this.updatePrTime();
   }
 
-  updateParams(paramsToUpdate: Partial<PrData>): Pr {
+  updateParams(paramsToUpdate: Partial<PrData> & { title?: string }): Pr {
     const entriesOfParamsToUpdate = Object.entries(paramsToUpdate);
 
     const filteredEntriesToUpdateClient = entriesOfParamsToUpdate.filter(
@@ -130,7 +195,14 @@ class Pr {
     );
 
     filteredEntriesToUpdateClient.forEach(([property, value]) => {
-      if (property === 'status') this.updateStatus(value as PrData['status']);
+      if (property === 'status') {
+        const statusUpdated = this.convertStatus(
+          value as PrInput['status'],
+          paramsToUpdate.title || '',
+          paramsToUpdate.userId || null
+        );
+        this.updateStatus(statusUpdated);
+      }
       if (property === 'urgenceLevel')
         this.updateUrgenceLevel(value as PrData['urgenceLevel']);
       if (property === 'githubId')
