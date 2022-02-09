@@ -1,7 +1,9 @@
 import { Message } from 'discord.js';
 
 import {
+  alloocateUserToPrCommandHandler,
   listAllocatedPrsCommandHandler,
+  listAllPrsCommandHandler,
   listAvailablePrsCommandHandler,
   listCommandsCommandHandler,
   pingCommandHandler,
@@ -17,12 +19,14 @@ export const discordListener = async (
 
   if (shouldContinue !== 'ignore') {
     const { command } = shouldContinue;
-    console.log(message);
 
     if (command === 'ping') await pingCommandHandler(message);
     else if (command === 'whoami') whoamiCommandHandler(message);
     else if (command === 'comandos') listCommandsCommandHandler(message);
     else if (command === 'tem_pr') listAvailablePrsCommandHandler(message);
     else if (command === 'alocados') listAllocatedPrsCommandHandler(message);
+    else if (command === 'me_aloca_aqui')
+      alloocateUserToPrCommandHandler(message);
+    else if (command === 'prs') listAllPrsCommandHandler(message);
   }
 };
