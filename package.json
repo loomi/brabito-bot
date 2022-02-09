@@ -7,7 +7,7 @@
     "build": "rimraf dist && tsc -p tsconfig-build.json",
     "build:prod": "tsc -p tsconfig-build.json",
     "start": "node dist/main/server.js",
-    "start:dev": "npm run prisma:migration:push && npx nodemon --exec 'npm run build && node dist/main/server.js' --watch src -e ts",
+    "start:dev": "npm run prisma:generate && npm run prisma:push && npx nodemon --exec 'npm run build && node dist/main/server.js' --watch src -e ts",
     "start:prod": "npm run prisma:migration:push && npm start",
     "lint": "eslint 'src/**' '__tests__/**'",
     "lint:fix": "eslint 'src/**' '__tests__/**' --fix",
