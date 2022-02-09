@@ -3,6 +3,7 @@ import 'module-alias/register';
 import { env } from '@/main/config';
 
 import { expressHttpServer } from '@/infra/express';
+import { mongoHandler } from '@/infra/databases/mongo';
 
 import { makePinoLoggerLocalAdapter } from './factories/infra/logs/pino';
 import { makeSentryLoggerErrorCloudAdapter } from './factories/infra/logs/sentry';
@@ -37,6 +38,9 @@ process.on('uncaughtException', (error) => {
 
 async function main() {
   try {
+    await mongoHandler.createConnection();
+    loggerLocal.logInfo('MongoDB connected successfully!');
+
     expressHttpServer.listen(env.httpServer.port, () =>
       loggerLocal.logInfo(
         `Server runing at http://localhost:${env.httpServer.port}`
@@ -48,6 +52,7 @@ async function main() {
       process.on(sig, async () => {
         try {
           expressHttpServer.close();
+          await mongoHandler.closeConnection();
 
           loggerLocal.logInfo('App exit with success');
           process.exit(exitStatus.Success);

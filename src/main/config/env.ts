@@ -17,24 +17,25 @@ export const env = {
   httpServer: {
     port: parseInt(process.env.API_PORT as string, 10) || (3001 as number),
   },
-  databases: {
-    postgres: {
-      url: process.env.DATABASE_URL as string,
-    },
-  },
   logs: {
     sentry: {
       url: process.env.SENTRY_URL as string,
     },
   },
-  cloud: {
-    cognito: {
-      apiVersion: process.env.COGNITO_API_VERSION as string,
-      region: process.env.COGNITO_REGION as string,
-      accessKeyId: process.env.COGNITO_ACCESS_KEY_ID as string,
-      secretAccessKey: process.env.COGNITO_SECRET_ACCESS_KEY as string,
-      clientId: process.env.COGNITO_CLIENT_ID as string,
-      userPoolId: process.env.COGNITO_USER_POOL_ID as string,
+  bot: {
+    discordToken: process.env.DISCORD_TOKEN as string,
+    channels: {
+      general: process.env.GENERAL_CHANNEL_ID as string,
+    },
+  },
+  databases: {
+    mongo: {
+      uri: process.env.MONGO_URI as string,
+      username: process.env.MONGO_USERNAME as string,
+      password: process.env.MONGO_PASSWORD as string,
+      dbPort: process.env.MONGO_DATABASE as string,
+      dbName: process.env.MONGO_DB_PORT as string,
+      host: process.env.MONGO_DB_HOST as string,
     },
   },
 };
