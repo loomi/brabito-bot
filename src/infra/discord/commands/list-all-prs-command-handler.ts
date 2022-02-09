@@ -8,7 +8,7 @@ export const listAllPrsCommandHandler = async (message: Message) => {
 
   const wrongFormat = () => {
     message.reply(
-      "Astronauta queride do meu coração :smiling_face_with_3_hearts:, acerta esse formato ou eu te mando pra Saturno :angry:\nSe liga nisso:\n\t\t~\t*How to use: `/prs <key_01>=<value_01> <key_02>=<value_02> ... <key_n>=<value_n>`*\n\t\t~\t*Available filters: `[pr_id: string as <PR_ID>, user_nick= string as <userGithubNick>, status: 'urgent' | 'important', project: string as <projectName>]`*"
+      "Astronauta queride do meu coração :smiling_face_with_3_hearts:,\nacerta esse formato ou eu te mando pra Saturno :angry:\nSe liga:\n\t\t~\t*How to use: `/prs <key_01>=<value_01> <key_02>=<value_02> ... <key_n>=<value_n>`*\n\t\t~\t*Available filters: `[pr_id: string as <PR_ID>, user_nick= string as <userGithubNick>, status: 'urgent' | 'important', project: string as <projectName>]`*"
     );
   };
 
@@ -28,13 +28,13 @@ export const listAllPrsCommandHandler = async (message: Message) => {
     return wrongFormat();
 
   const keysAndValuesAsObject = Object.fromEntries(keysAndValues);
-  const status = keysAndValuesAsObject.status;
+  const urgenceLevel = keysAndValuesAsObject.status;
   const discordId = keysAndValuesAsObject.pr_id;
   const userGithubNick = keysAndValuesAsObject.user_nick;
   const projectName = keysAndValuesAsObject.project;
 
   const { prs, totalPrs } = await listPrsService.list({
-    status,
+    urgenceLevel,
     discordId,
     projectName,
     userGithubNick,
@@ -49,7 +49,7 @@ export const listAllPrsCommandHandler = async (message: Message) => {
 
   const basicHello = `Atualmente ${
     totalPrs === 1 ? 'existe 1 PR' : `existem ${totalPrs} PRs`
-  } para ser ${
+  } para serem ${
     totalPrs === 1 ? 'listado' : 'listados'
   } com essas onfigurações:\n`;
 

@@ -8,7 +8,7 @@ export namespace ListPrsUsecase {
   export type Params = {
     id?: string;
     status?: PrData['status'];
-    urgencyLevel?: PrData['urgenceLevel'];
+    urgenceLevel?: PrData['urgenceLevel'];
     githubId?: PrData['githubId'];
     discordId?: PrData['discordId'];
     userGithubNick?: string;
