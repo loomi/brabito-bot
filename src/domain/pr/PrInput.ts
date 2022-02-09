@@ -5,11 +5,10 @@ export type PrInput = {
     | 'open'
     | 'closed'
     | 'reopened'
-    | 'review requested'
-    | 'review request removed'
-    | 'ready for review'
-    | 'approved'
-    | 'merged';
+    | 'changes-requested' // review requested
+    | 'changes-approved' // review request removed
+    | 'review-requested' // ready for review
+    | 'approved';
   urgenceLevel: 'urgent' | 'important';
   githubId: string;
   projectName: string;
