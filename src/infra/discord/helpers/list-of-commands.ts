@@ -4,7 +4,9 @@ export const availableCommands = {
   comandos: 'will list all commands and their description',
   tem_pr: ' will list all PRs with status equals to **not_allocated**',
   alocados: ' list every pr who is with someone allocated',
-  prs: " list all PRs registered, but you can filter passing tags withing the command, i.e. (/prs pr_id=<some_value>).\nKeys to pass: [pr_id; user_nick; status['urgent' | 'important']; project]",
+  prs: " list all PRs registered. You can filter them passing tags withing the command.\n\t\t~\t*How to use: `/prs <key_01>=<value_01> <key_02>=<value_02> ... <key_n>=<value_n>`*\n\t\t~\t*Available filters: `[pr_id: string as <PR_ID>, user_nick= string as <userGithubNick>, status: 'urgent' | 'important', project: string as <projectName>]`*",
+  me_aloca_aqui:
+    ' this command will try to allocate the user who send the message as reviwer of the PR indicated.\n\t\t~\t*How to use: `/me_aloca_aqui <pr_id>`*',
 };
 
 export type AvailableCommands = keyof typeof availableCommands;
