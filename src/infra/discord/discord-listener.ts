@@ -1,6 +1,8 @@
 import { Message } from 'discord.js';
 
 import {
+  listAllocatedPrsCommandHandler,
+  listAvailablePrsCommandHandler,
   listCommandsCommandHandler,
   pingCommandHandler,
   whoamiCommandHandler,
@@ -19,6 +21,8 @@ export const discordListener = async (
 
     if (command === 'ping') await pingCommandHandler(message);
     else if (command === 'whoami') whoamiCommandHandler(message);
-    else if (command === 'commands') listCommandsCommandHandler(message);
+    else if (command === 'comandos') listCommandsCommandHandler(message);
+    else if (command === 'tem_pr') listAvailablePrsCommandHandler(message);
+    else if (command === 'alocados') listAllocatedPrsCommandHandler(message);
   }
 };
