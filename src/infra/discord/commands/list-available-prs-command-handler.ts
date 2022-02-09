@@ -10,11 +10,9 @@ export const listAvailablePrsCommandHandler = async (message: Message) => {
   });
 
   if (!totalPrs) {
-    await message.reply(
-      `Obaaa, não existem prs abertos, parabéns backenders!!! :grin: :grin: :clap: :clap:`
+    return await message.reply(
+      `Obaaa, não existem mais PRs abertos, parabéns backenders!!! :clap: :clap: :grin: :grin:\n||ps: nada mais que a obrigação de vcs tbm, né... :rolling_eyes:||`
     );
-
-    return;
   }
   const basicHello = `Atualmente ${
     totalPrs === 1 ? 'existe' : 'existem'
@@ -31,7 +29,7 @@ export const listAvailablePrsCommandHandler = async (message: Message) => {
   const footer = `-------------------------------------------------------------- \`\`\`
 
   E aí, que tal se alocar em algum, em?
-  Muito fácil, só rodar **/me_aloca <pr_id>** :wink:`;
+  Muito fácil, só rodar **/me_aloca_aqui <pr_id>** :wink:`;
 
-  await message.reply(`${basicHello}\n${header}${listOfPrs}${footer}`);
+  return await message.reply(`${basicHello}\n${header}${listOfPrs}${footer}`);
 };

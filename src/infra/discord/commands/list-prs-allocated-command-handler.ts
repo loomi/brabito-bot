@@ -26,9 +26,9 @@ export const listAllocatedPrsCommandHandler = async (message: Message) => {
 
   const footer = `-------------------------------------------------------------- \`\`\`
 
-  Boa galera, parabéns!!! :grin: :clap:
+  Boa galera, parabéns!!! :clap: :grin:
   Mas vamos andar com isso né... :face_with_monocle:
-  5 horas na minha mesa, blz!? :hourglass::face_with_raised_eyebrow:
+  5 horas na minha mesa, blz!? :hourglass: :face_with_raised_eyebrow:
   `;
 
   await message.reply(`${basicHello}${header}${listOfPrs}\n${footer}`);
