@@ -8,6 +8,8 @@ import { prismaConnector } from '@/infra/database/orm/prisma';
 
 import { makePinoLoggerLocalAdapter } from './factories/infra/logs/pino';
 import { makeSentryLoggerErrorCloudAdapter } from './factories/infra/logs/sentry';
+import { makeNodeCronScheduler } from './factories/infra/node-cron';
+import { makeChargeForReviewersService } from './factories/usecases/pr';
 
 const exitStatus = {
   Failure: 1,
@@ -18,6 +20,7 @@ process.setMaxListeners(20);
 
 const loggerLocal = makePinoLoggerLocalAdapter();
 const loggerErrorCloud = makeSentryLoggerErrorCloudAdapter();
+const chargeForReviews = makeChargeForReviewersService();
 
 process.on('unhandledRejection', (reason, promise) => {
   const error = new Error(
@@ -43,6 +46,18 @@ async function main() {
     loggerLocal.logInfo(
       `Prisma connect with success to ${env.databases.prisma.databaseUrl}`
     );
+
+    const scheduler = makeNodeCronScheduler();
+    scheduler.schedule(() => {
+      chargeForReviews.chargeReviewers();
+      loggerLocal.logInfo(
+        `Bot runnig til ${new Date().toLocaleDateString('pt-BR', {
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+        })}}`
+      );
+    }, env.scheduler.mainRecurrenceInterval);
 
     expressHttpServer.listen(env.httpServer.port, () =>
       loggerLocal.logInfo(

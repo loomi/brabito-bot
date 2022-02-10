@@ -7,7 +7,7 @@ import { tags, servers, securitySchemes } from '@/infra/swagger/helpers';
 export default {
   openapi: '3.0.0',
   info: {
-    title: 'Untitled-b API',
+    title: 'Brabito API',
     version: '1.0.0',
     description: 'API',
     contact: {
