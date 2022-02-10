@@ -1,5 +1,27 @@
 version: '3.8'
 services:
+  db:
+    image: postgres:10.3
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_DB=${DATABASE_NAME}
+      - POSTGRES_USER=${DATABASE_USERNAME}
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+    volumes:
+      - ./pg-data:/var/lib/postgresql/data
+    ports:
+      - ${DATABASE_PORT}:5432
+
+  adminer:
+    image: adminer
+    env_file:
+      - .env
+    ports:
+      - ${ADMINER_PORT}:8080
+    depends_on:
+      - db
+
   api:
     build:
       context: .
@@ -12,27 +34,4 @@ services:
       - ./src:/usr/app/src
       - ./.env:/usr/app/.env
     depends_on:
-      - mongo
-
-  mongo:
-    image: mongo
-    restart: always
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
-    ports:
-      - ${MONGO_DB_PORT}:${MONGO_DB_PORT}
-    volumes:
-      - ./mongodb:/var/lib/mongodb/data
-
-  mongo-express:
-    image: mongo-express
-    restart: always
-    ports:
-      - ${MONGO_PORT}:${MONGO_PORT}
-    environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGO_ADMIN_USER}
-      ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGO_ADMIN_PASS}
-      ME_CONFIG_MONGODB_URL: mongodb://${MONGO_ADMIN_USER}:${MONGO_ADMIN_PASS}@${MONGO_DATABASE}:${MONGO_DB_PORT}/
-    links:
-      - mongo
+      - db

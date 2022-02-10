@@ -37,5 +37,23 @@ export const env = {
       dbName: process.env.MONGO_DB_PORT as string,
       host: process.env.MONGO_DB_HOST as string,
     },
+    prisma: {
+      databaseUrl: process.env.PRISMA_URL as string,
+    },
+  },
+  scheduler: {
+    notAllocatedImportantReviews: Number(
+      process.env.RECURRENCE_HOURS_NUMBER_FOR_IMPORTANT_NOT_ALLOCATED_PRS
+    ),
+    notAllocatedUrgentReviews: Number(
+      process.env.RECURRENCE_MINUTES_NUMBER_FOR_URGENT_NOT_ALLOCATED_PRS
+    ),
+    allocatedImportantReviews: Number(
+      process.env.RECURRENCE_HOURS_NUMBER_FOR_IMPORTANT_ALLOCATED_PRS
+    ),
+    allocatedUrgentReviews: Number(
+      process.env.RECURRENCE_HOURS_NUMBER_FOR_URGENT_ALLOCATED_PRS
+    ),
+    mainRecurrenceInterval: process.env.RECURENCE_INTERVAL as string,
   },
 };

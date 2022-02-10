@@ -1,4 +1,4 @@
-import { LoggerLocal } from '@/domain/usecases/protocols/logs';
+import { LoggerLocal } from '@/shared/logs';
 import { PinoLoggerLocalAdapter } from '@/infra/logs/pino';
 
 export const makePinoLoggerLocalAdapter = (): LoggerLocal => {

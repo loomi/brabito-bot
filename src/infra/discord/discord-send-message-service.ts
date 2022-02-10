@@ -1,5 +1,5 @@
-import { MessageData } from '@/domain/entities/message/MessageData';
-import { SendMessageService } from '@/domain/usecases/protocols/message';
+import { MessageData } from '@/domain/message';
+import { SendMessageService } from '@/domain/message/usecases/send-message/protocols';
 import { discordBot } from './discord-bot';
 import discordEnvironment from './discord-environment';
 

@@ -1,6 +1,6 @@
 import * as Sentry from '@sentry/node';
 
-import { LoggerErrorCloud } from '@/domain/usecases/protocols/logs/logger-error-cloud';
+import { LoggerErrorCloud } from '@/shared/logs/logger-error-cloud';
 import sentryEnvironment from './sentry-environment';
 
 export class SentryLoggerErrorCloudAdapter implements LoggerErrorCloud {
