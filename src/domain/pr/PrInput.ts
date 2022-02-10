@@ -17,4 +17,5 @@ export type PrInput = {
   userId: string | null;
   createdAt?: Date;
   updatedAt?: Date;
+  lastReviewChecked?: Date;
 };

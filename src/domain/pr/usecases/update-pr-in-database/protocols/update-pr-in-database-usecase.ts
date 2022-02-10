@@ -9,6 +9,7 @@ export namespace UpdatePrUsecase {
     id: string;
     status?: PrInput['status'];
     urgencyLevel?: PrData['urgenceLevel'];
+    lastReviewChecked?: PrData['lastReviewChecked'];
     githubId?: PrData['githubId'];
     discordId?: PrData['discordId'];
     userId?: string;

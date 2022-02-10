@@ -17,4 +17,5 @@ export type PrData = {
   user: any;
   createdAt: Date;
   updatedAt: Date;
+  lastReviewChecked: Date;
 };

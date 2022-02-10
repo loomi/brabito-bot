@@ -14,6 +14,7 @@ class Pr {
   private user: PrData['user'];
   private readonly createdAt: Date;
   private updatedAt: Date;
+  private lastReviewChecked: Date;
 
   constructor(prms: { createPrParams?: PrInput; createPrFromParams?: PrData }) {
     if (
@@ -69,6 +70,10 @@ class Pr {
       prms.createPrFromParams?.updatedAt ||
       prms.createPrParams?.updatedAt ||
       new Date();
+    this.lastReviewChecked =
+      prms.createPrFromParams?.lastReviewChecked ||
+      prms.createPrParams?.lastReviewChecked ||
+      new Date();
   }
 
   private convertStatus(
@@ -121,6 +126,7 @@ class Pr {
       user: this.user,
       userId: this.userId,
       updatedAt: this.updatedAt,
+      lastReviewChecked: this.lastReviewChecked,
     };
   }
 
@@ -154,6 +160,11 @@ class Pr {
     this.updatePrTime();
   }
 
+  updateLastReviewChecked(lastReviewChecked: PrData['lastReviewChecked']) {
+    this.lastReviewChecked = lastReviewChecked;
+    this.updatePrTime();
+  }
+
   updateParams(
     paramsToUpdate: Partial<Omit<PrData, 'status'>> & {
       status?: PrInput['status'];
@@ -180,6 +191,7 @@ class Pr {
       if (property === 'githubId') this.updateGithubId(value);
       if (property === 'discordId') this.updateDiscordId(value);
       if (property === 'userId') this.updateUserId(value);
+      if (property === 'lastReviewChecked') this.updateLastReviewChecked(value);
     });
 
     return this;

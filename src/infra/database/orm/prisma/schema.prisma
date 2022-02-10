@@ -34,17 +34,18 @@ model User {
 }
 
 model Pr {
-  id             String         @id @default(uuid()) @db.Uuid
-  status         PrStatus
-  urgenceLevel   PrUrgenceLevel
-  userGithubNick String
-  projectName    String
-  githubId       String         @unique
-  discordId      String         @unique
-  userId         String?        @map("user_id") @db.Uuid
-  user           User?          @relation(fields: [userId], references: [id])
-  createdAt      DateTime       @default(now()) @map("created_at")
-  updatedAt      DateTime       @updatedAt @map("updated_at")
+  id                String         @id @default(uuid()) @db.Uuid
+  status            PrStatus
+  urgenceLevel      PrUrgenceLevel
+  userGithubNick    String
+  projectName       String
+  githubId          String         @unique
+  discordId         String         @unique
+  userId            String?        @map("user_id") @db.Uuid
+  user              User?          @relation(fields: [userId], references: [id])
+  createdAt         DateTime       @default(now()) @map("created_at")
+  updatedAt         DateTime       @updatedAt @map("updated_at")
+  lastReviewChecked DateTime       @default(now())
 
   @@map("pr")
 }
