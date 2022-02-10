@@ -2,13 +2,13 @@ import { availableCommands, AvailableCommands } from '.';
 
 export const extractCommand = (
   messageContent: string
-): 'ignore' | { command: AvailableCommands } => {
+): 'ignore' | 'not_a_command' | { command: AvailableCommands } => {
   if (!messageContent.startsWith('/')) return 'ignore';
 
   const [command] = messageContent.split(' ');
   const cmdWithoutSlash = command.slice(1);
   if (!Object.prototype.hasOwnProperty.call(availableCommands, cmdWithoutSlash))
-    return 'ignore';
+    return 'not_a_command';
 
   return { command: cmdWithoutSlash as AvailableCommands };
 };

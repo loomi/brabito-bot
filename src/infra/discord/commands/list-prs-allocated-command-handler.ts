@@ -21,7 +21,9 @@ export const listAllocatedPrsCommandHandler = async (message: Message) => {
   const listOfPrs = prs.map((pr) => {
     const prAsJSON = pr.toJSON();
 
-    return `${prAsJSON.discordId} | ${prAsJSON.urgenceLevel} | ${prAsJSON.userGithubNick} | ${prAsJSON.user.name} | ${prAsJSON.projectName}\n`;
+    return `${prAsJSON.discordId} | ${prAsJSON.urgenceLevel} | ${
+      prAsJSON.userGithubNick
+    } | ${prAsJSON?.user?.name || 'dont_know'} | ${prAsJSON.projectName}\n`;
   });
 
   const footer = `-------------------------------------------------------------- \`\`\`

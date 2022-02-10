@@ -41,6 +41,6 @@ export const alloocateUserToPrCommandHandler = async (message: Message) => {
   }
 
   return message.reply(
-    `Show demais <@!${userDiscordId}>, gosto asim!!! :clap: :relieved:\nAgora cuida em corrigir isso aí blz... Pra ontem, vou cobrar! :hourglass: :angry:`
+    `Show demais <@!${userDiscordId}>, gosto assim!!! :clap: :relieved:\nAgora cuida em corrigir isso aí blz... Pra ontem, vou cobrar! :hourglass: :angry:`
   );
 };

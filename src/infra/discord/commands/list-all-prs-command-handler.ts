@@ -8,7 +8,7 @@ export const listAllPrsCommandHandler = async (message: Message) => {
 
   const wrongFormat = () => {
     message.reply(
-      "Astronauta queride do meu coração :smiling_face_with_3_hearts:,\nacerta esse formato ou eu te mando pra Saturno :angry:\nSe liga:\n\t\t~\t*How to use: `/prs <key_01>=<value_01> <key_02>=<value_02> ... <key_n>=<value_n>`*\n\t\t~\t*Available filters: `[pr_id: string as <PR_ID>, user_nick= string as <userGithubNick>, status: 'urgent' | 'important', project: string as <projectName>]`*"
+      "Astronauta queride do meu coração :smiling_face_with_3_hearts:, tu errou o formato do comando...\nSe liga:\n\t\t~\t*How to use: `/prs <key_01>=<value_01> <key_02>=<value_02> ... <key_n>=<value_n>`*\n\t\t~\t*Available filters: `[pr_id: string as <PR_ID>, user_nick= string as <userGithubNick>, status: 'urgent' | 'important', project: string as <projectName>]`*\nAgora acerta esse formato ou eu te mando pra Saturno... :angry:"
     );
   };
 
