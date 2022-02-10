@@ -37,7 +37,7 @@ class Pr {
     this.status =
       prms.createPrFromParams?.status ||
       this.convertStatus(
-        prms.createPrParams?.status || 'open',
+        prms.createPrParams?.status || 'opened',
         prms.createPrParams?.title || '',
         prms.createPrParams?.userId || prms.createPrFromParams?.userId || null
       );
@@ -83,7 +83,7 @@ class Pr {
   ): PrData['status'] {
     if (githubTitle.toLocaleLowerCase().match('wip')) {
       return 'wip';
-    } else if (githubStatus === 'open') {
+    } else if (githubStatus === 'opened') {
       return 'not_allocated';
     } else if (githubStatus === 'closed') {
       return 'closed';

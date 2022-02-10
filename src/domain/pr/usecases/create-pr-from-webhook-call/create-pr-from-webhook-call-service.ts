@@ -4,22 +4,27 @@ import { Pr } from '@/domain/pr';
 
 import { CreatePrInDatabaseRepository } from '../create-pr-in-database/protocols';
 import { CreatePrFromWebhookCallServiceError } from './errors';
+import { SendMessageUsecase } from '@/domain/message/usecases/send-message';
 
 type CreatePrInDatabaseServiceInjectables = {
   createPrInDatabaseRepository: CreatePrInDatabaseRepository;
   UUIDGenerator: UUIDGenerator;
+  sendMessageService: SendMessageUsecase;
 };
 
 class CreatePrFromWebhookCallService implements CreatePrFromWebhookCallUsecase {
   private readonly createPrInDatabaseRepository: CreatePrInDatabaseRepository;
   private readonly UUIDGenerator: UUIDGenerator;
+  private readonly sendMessageService: SendMessageUsecase;
 
   constructor({
     createPrInDatabaseRepository,
     UUIDGenerator,
+    sendMessageService,
   }: CreatePrInDatabaseServiceInjectables) {
     this.createPrInDatabaseRepository = createPrInDatabaseRepository;
     this.UUIDGenerator = UUIDGenerator;
+    this.sendMessageService = sendMessageService;
   }
 
   async create(
@@ -64,6 +69,11 @@ class CreatePrFromWebhookCallService implements CreatePrFromWebhookCallUsecase {
     });
 
     await this.createPrInDatabaseRepository.createPr(newPr);
+
+    const prData = newPr.toJSON();
+    await this.sendMessageService.send({
+      content: `@Back, **${prData.userGithubNick}** acabou de abrir um PR em **${prData.projectName}**!\nO ID dele é **${prData.discordId}** e, como sou um amor de pessoa (ops, bot...), vou até facilitar pra vcs :relieved:\nSó preciso que alguém rode **/me_aloca_aqui ${prData.discordId}**\n||agora não rodem não pra ver como faço da vida de vcs um inferno :imp:||`,
+    });
 
     return newPr;
   }

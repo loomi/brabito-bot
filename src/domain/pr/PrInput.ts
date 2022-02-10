@@ -2,7 +2,7 @@ export type PrInput = {
   id: string;
   title: string;
   status:
-    | 'open'
+    | 'opened'
     | 'closed'
     | 'reopened'
     | 'changes-requested' // review requested

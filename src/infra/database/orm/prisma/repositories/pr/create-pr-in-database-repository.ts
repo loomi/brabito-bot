@@ -18,9 +18,10 @@ export class PrismaCreatePrInDatabaseRepository
   ): Promise<CreatePrInDatabaseRepository.Result> {
     try {
       const pr = prParams;
-      const prParamsInJSON = pr.toJSON();
+      const prParamsInJSON: any = pr.toJSON();
 
       delete prParamsInJSON.user;
+      delete prParamsInJSON.userId;
       await this.prismaConnection.pr.create({
         data: prParamsInJSON,
       });
