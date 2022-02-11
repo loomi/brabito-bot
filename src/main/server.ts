@@ -50,6 +50,7 @@ async function main() {
     const scheduler = makeNodeCronScheduler();
     scheduler.schedule(() => {
       chargeForReviews.chargeReviewers();
+      console.log('something');
       loggerLocal.logInfo(
         `Bot runnig til ${new Date().toLocaleDateString('pt-BR', {
           hour: '2-digit',
