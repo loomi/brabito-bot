@@ -91,18 +91,18 @@ export class ChargeForReviewersService implements ChargeForReviewersUsecase {
 
           const messagesForNotAllocated = {
             important: [
-              `Já desisti de vcs viu @Back, se aloquem ou não, não vou ficar mais de :clown: aqui...\nps: se existir alguma alma caridosa, seguem os dados: PR **${discordId}** de **${projectName}** aberto por **${userGithubNick}**`,
-              `@Back, preciso de alguém pra corrigir o PR **${discordId}** lá em **${projectName}**`,
-              `E aí astronautas de @Back, PR de **${projectName}** aberto há **${openSinceXHoursOrMinutes}h**, ninguém vai se alocar não? :angry:`,
-              `@Back, preciso de alguém pra corrigir o PR **${discordId}** lá em **${projectName}**`,
-              `@Back, por favor né, o tempo tá passando... Ninguém vai corrigir o PR de **${userGithubNick}** lá em **${projectName}** não? :rage:`,
-              `@Back, preciso de alguém pra corrigir o PR **${discordId}** lá em **${projectName}**`,
-              `Galerinha querida de @Back, se ninguém se alocar no PR **${discordId}** de **${projectName}** eu mesmo vou alocar viu, não me desafiem! :face_with_symbols_over_mouth:`,
-              `@Back, preciso de alguém pra corrigir o PR **${discordId}** lá em **${projectName}**`,
+              `Já desisti de vcs viu <@&805765119384616962>, se aloquem ou não, não vou ficar mais de :clown: aqui...\nps: se existir alguma alma caridosa, seguem os dados: PR **${discordId}** de **${projectName}** aberto por **${userGithubNick}**`,
+              `<@&805765119384616962>, preciso de alguém pra corrigir o PR **${discordId}** lá em **${projectName}**`,
+              `E aí astronautas de <@&805765119384616962>, PR de **${projectName}** aberto há **${openSinceXHoursOrMinutes}h**, ninguém vai se alocar não? :angry:`,
+              `<@&805765119384616962>, preciso de alguém pra corrigir o PR **${discordId}** lá em **${projectName}**`,
+              `<@&805765119384616962>, por favor né, o tempo tá passando... Ninguém vai corrigir o PR de **${userGithubNick}** lá em **${projectName}** não? :rage:`,
+              `<@&805765119384616962>, preciso de alguém pra corrigir o PR **${discordId}** lá em **${projectName}**`,
+              `Galerinha querida de <@&805765119384616962>, se ninguém se alocar no PR **${discordId}** de **${projectName}** eu mesmo vou alocar viu, não me desafiem! :face_with_symbols_over_mouth:`,
+              `<@&805765119384616962>, preciso de alguém pra corrigir o PR **${discordId}** lá em **${projectName}**`,
             ],
             urgent: [
-              `@Back, o PR **${discordId}** de **${projectName}** tá marcado como urgente, então corram pra se alocar e revisar!!!`,
-              `@Back, vocês entendem o conceito da palavra URGENTE? Caso não, lidem com os clientes de **${projectName}** no lugar de **${userGithubNick}**, pq eles querem o PR **${discordId}** em prod pra ontem!!!`,
+              `<@&805765119384616962>, o PR **${discordId}** de **${projectName}** tá marcado como urgente, então corram pra se alocar e revisar!!!`,
+              `<@&805765119384616962>, vocês entendem o conceito da palavra URGENTE? Caso não, lidem com os clientes de **${projectName}** no lugar de **${userGithubNick}**, pq eles querem o PR **${discordId}** em prod pra ontem!!!`,
             ],
           };
           const messagesForAllocated = {
@@ -122,7 +122,7 @@ export class ChargeForReviewersService implements ChargeForReviewersUsecase {
               }, vc já está a frente do rolê só por ter se alocado!\nMas é que o PR tá marcado como urgente :grimacing:\nTem como ver isso o quanto antes?`,
               `<@!${user?.discordId}> meu queride, eu sei que tá corrido por aí, mas tá corrido pra ${userGithubNick} tbm (principalmente com esse PR específico :grimacing:)\nTem como tu dar aquele gás pra a gente fechar esse PR?`,
               `<@!${user?.discordId}> sem querer pressionar, mas tô aqui pra isso né...\nO PR de **${projectName}** continua aberto... :grimacing:\nSe não conseguir corrigir agora, tu pode passar o PR pra outra pessoa tá, e tá tudo bem!\nÉ só que, como o PR é urgente, a gente precisa daquele último gás sabe :sweat:`,
-              `Ou pessoal de @Back, ninguém consegue ajudar <@!${user?.discordId}> com esse PR não? Parece que tá bem punk pra elu... :grimacing:\nPra rolar essa troca de reviewer é só outra pessoa rodar \`/me_aloca_aqui ${discordId}\` :wink:`,
+              `Ou pessoal de <@&805765119384616962>, ninguém consegue ajudar <@!${user?.discordId}> com esse PR não? Parece que tá bem punk pra elu... :grimacing:\nPra rolar essa troca de reviewer é só outra pessoa rodar \`/me_aloca_aqui ${discordId}\` :wink:`,
             ],
           };
           const messageToSend =
@@ -194,7 +194,7 @@ export class ChargeForReviewersService implements ChargeForReviewersUsecase {
           : [''];
 
       await this.sendMessageUsecase.send({
-        content: `Bora @Back, sem mensagem bonitinha pq o assunto é sério${
+        content: `Bora <@&805765119384616962>, sem mensagem bonitinha pq o assunto é sério${
           urgenceLevel === 'urgent' ? ' (sério não URGENTEEE)' : ''
         }.\nTemos ${messages.length} ${
           scopeContentMessage[prStatus]
