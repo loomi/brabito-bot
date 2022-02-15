@@ -5,7 +5,7 @@ export const listAvailablePrsCommandHandler = async (message: Message) => {
   const listPrsService = makeListPrService();
 
   const { prs, totalPrs } = await listPrsService.list({
-    status: 'not_allocated',
+    status: ['not_allocated'],
     orderBy: { property: 'status', mode: 'desc' },
   });
 

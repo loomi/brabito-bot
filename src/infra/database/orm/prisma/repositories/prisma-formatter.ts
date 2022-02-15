@@ -2,8 +2,6 @@ export class PrismaFormatter {
   static formatFilter(filterObject: any): Object {
     const filterEntries = Object.entries(filterObject);
 
-    const listParamsToConvertKey = new Map([]);
-
     const filterWithoutUndefined = filterEntries.filter(
       ([key, value]) => value !== undefined
     );
@@ -15,7 +13,7 @@ export class PrismaFormatter {
         }
 
         if (value instanceof Array) {
-          return [listParamsToConvertKey.get(key), { id: { in: value } }];
+          return [key, { in: value }];
         }
 
         if (key === 'createdAt' || key === 'updatedAt' || key === 'date') {

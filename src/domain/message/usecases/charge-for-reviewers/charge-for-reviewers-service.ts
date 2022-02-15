@@ -55,7 +55,7 @@ export class ChargeForReviewersService implements ChargeForReviewersUsecase {
     scopeToHandle: 'hours' | 'minutes'
   ) {
     const { prs } = await this.listPrsService.list({
-      status: prStatus,
+      status: [prStatus],
       urgenceLevel,
     });
 
