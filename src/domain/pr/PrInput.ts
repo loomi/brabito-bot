@@ -11,6 +11,7 @@ export type PrInput = {
     | 'approved';
   urgenceLevel: 'urgent' | 'important';
   githubId: string;
+  githubLink: string;
   projectName: string;
   discordId: string;
   userGithubNick: string;

@@ -40,6 +40,7 @@ model Pr {
   userGithubNick    String
   projectName       String
   githubId          String         @unique
+  githubLink        String         @default("||Ihhh, vai me desculpar, mas não consegui o link :grimacing:||")
   discordId         String         @unique
   userId            String?        @map("user_id") @db.Uuid
   user              User?          @relation(fields: [userId], references: [id])

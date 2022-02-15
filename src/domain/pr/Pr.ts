@@ -10,6 +10,7 @@ class Pr {
   private projectName: PrData['projectName'];
   private discordId: string;
   private githubId: string;
+  private githubLink: string;
   private userId: PrData['userId'];
   private user: PrData['user'];
   private readonly createdAt: Date;
@@ -43,6 +44,10 @@ class Pr {
       );
     this.githubId =
       prms.createPrFromParams?.githubId || prms.createPrParams?.githubId || '';
+    this.githubLink =
+      prms.createPrFromParams?.githubLink ||
+      prms.createPrParams?.githubLink ||
+      '';
     this.discordId =
       prms.createPrFromParams?.discordId ||
       prms.createPrParams?.discordId ||
@@ -123,6 +128,7 @@ class Pr {
       projectName: this.projectName,
       discordId: this.discordId,
       githubId: this.githubId,
+      githubLink: this.githubLink,
       user: this.user,
       userId: this.userId,
       updatedAt: this.updatedAt,

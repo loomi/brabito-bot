@@ -10,6 +10,7 @@ export type PrData = {
     | 'merged';
   urgenceLevel: 'urgent' | 'important';
   githubId: string;
+  githubLink: string;
   projectName: string;
   userGithubNick: string;
   discordId: string;
