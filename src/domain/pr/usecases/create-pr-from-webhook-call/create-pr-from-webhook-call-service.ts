@@ -46,6 +46,9 @@ class CreatePrFromWebhookCallService implements CreatePrFromWebhookCallUsecase {
     const isUrgentPr = prParams.pull_request?.labels?.some(
       (label: any) => label.name === 'urgent'
     );
+    const githubLink =
+      prParams.pull_request?.html_url ||
+      '||Ihhh, vai me desculpar, mas não consegui o link :grimacing:||';
     const userGithubNick =
       prParams.pull_request?.user?.login || "someone_who_i_don't_know";
     const id = this.UUIDGenerator.generate();
@@ -59,6 +62,7 @@ class CreatePrFromWebhookCallService implements CreatePrFromWebhookCallUsecase {
         id,
         discordId,
         githubId,
+        githubLink,
         status,
         title,
         urgenceLevel: isUrgentPr ? 'urgent' : 'important',
@@ -72,7 +76,7 @@ class CreatePrFromWebhookCallService implements CreatePrFromWebhookCallUsecase {
 
     const prData = newPr.toJSON();
     await this.sendMessageService.send({
-      content: `<@&805765119384616962>, **${prData.userGithubNick}** acabou de abrir um PR em **${prData.projectName}**!\nO ID dele é **${prData.discordId}** e, como sou um amor de pessoa (ops, bot...), vou até facilitar pra vcs :relieved:\nSó preciso que alguém rode **/me_aloca_aqui ${prData.discordId}**\n||agora não rodem não pra ver como faço da vida de vcs um inferno :imp:||`,
+      content: `<@&805765119384616962>, **${prData.userGithubNick}** acabou de abrir um PR em **${prData.projectName}**!\nO ID dele é **${prData.discordId}** e, como sou um amor de pessoa (ops, bot...), vou até facilitar pra vcs :relieved:\nSó preciso que alguém rode **/me_aloca_aqui ${prData.discordId}**\nPra facilitar mais ainda, segue o link do PR: ${githubLink}\n||agora não rodem não pra ver como faço da vida de vcs um inferno :imp:||`,
     });
 
     return newPr;
