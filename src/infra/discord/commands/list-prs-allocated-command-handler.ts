@@ -6,7 +6,9 @@ export const listAllocatedPrsCommandHandler = async (message: Message) => {
 
   const listPrsService = makeListPrService();
 
-  const { prs, totalPrs } = await listPrsService.list({ status: 'allocated' });
+  const { prs, totalPrs } = await listPrsService.list({
+    status: ['allocated'],
+  });
 
   if (!totalPrs) {
     await message.reply(
@@ -33,5 +35,7 @@ export const listAllocatedPrsCommandHandler = async (message: Message) => {
   5 horas na minha mesa, blz!? :hourglass: :face_with_raised_eyebrow:
   `;
 
-  await message.reply(`${basicHello}${header}${listOfPrs}\n${footer}`);
+  await message.reply(
+    `${basicHello}${header}${listOfPrs.join().replace(/,/gi, '')}\n${footer}`
+  );
 };

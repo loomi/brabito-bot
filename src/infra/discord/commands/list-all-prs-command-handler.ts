@@ -15,17 +15,18 @@ export const listAllPrsCommandHandler = async (message: Message) => {
   const validKeys = ['pr_id', 'user_nick', 'status', 'project'];
 
   const keysAndValues = cmdOptions.map((filterTag) => filterTag.split('='));
-  if (keysAndValues.some(([key, value]) => !key || !value))
+  if (keysAndValues.some(([key, value]) => !key || !value)) {
     return wrongFormat();
-  if (keysAndValues.some(([key]) => !validKeys.includes(key)))
+  } else if (keysAndValues.some(([key]) => !validKeys.includes(key))) {
     return wrongFormat();
-  if (
+  } else if (
     keysAndValues.some(
       ([key, value]) =>
         key === 'status' && value !== 'important' && value !== 'urgent'
     )
-  )
+  ) {
     return wrongFormat();
+  }
 
   const keysAndValuesAsObject = Object.fromEntries(keysAndValues);
   const urgenceLevel = keysAndValuesAsObject.status;
@@ -39,6 +40,7 @@ export const listAllPrsCommandHandler = async (message: Message) => {
     projectName,
     userGithubNick,
     orderBy: { property: 'createdAt', mode: 'desc' },
+    status: ['not_allocated', 'allocated', 'changes_requested', 'wip'],
   });
 
   if (!totalPrs) {
@@ -51,7 +53,7 @@ export const listAllPrsCommandHandler = async (message: Message) => {
     totalPrs === 1 ? 'existe 1 PR' : `existem ${totalPrs} PRs`
   } para serem ${
     totalPrs === 1 ? 'listado' : 'listados'
-  } com essas onfigurações:\n`;
+  } com essas configurações:\n`;
 
   const header = `\`\`\`##############################################################\nId do PR | Status | Situação | Quem abriu | Projeto\n--------------------------------------------------------------\n`;
 
