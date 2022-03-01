@@ -4,7 +4,8 @@ import { Pr } from '@/domain/pr';
 
 import { CreatePrInDatabaseRepository } from '../create-pr-in-database/protocols';
 import { CreatePrFromWebhookCallServiceError } from './errors';
-import { SendMessageUsecase } from '@/domain/message/usecases/send-message';
+import { SendMessageUsecase } from '@/domain/message/usecases/send-message/protocols';
+import { env } from '@/main/config';
 
 type CreatePrInDatabaseServiceInjectables = {
   createPrInDatabaseRepository: CreatePrInDatabaseRepository;
@@ -30,7 +31,7 @@ class CreatePrFromWebhookCallService implements CreatePrFromWebhookCallUsecase {
   async create(
     prParams: CreatePrFromWebhookCallUsecase.Params
   ): Promise<CreatePrFromWebhookCallUsecase.Result> {
-    const origin = prParams.origin;
+    const origin = prParams?.origin || 'back';
 
     const status = prParams.action || 'not_defined';
     const githubId = `${prParams.pull_request?.id}` || 'not_defined';
@@ -78,8 +79,18 @@ class CreatePrFromWebhookCallService implements CreatePrFromWebhookCallUsecase {
     await this.createPrInDatabaseRepository.createPr(newPr);
 
     const prData = newPr.toJSON();
+
+    const getRoleToMention = {
+      back: env.bot.channels.backRole,
+      front: env.bot.channels.frontRole,
+    };
+    const roleToMention = getRoleToMention[origin as 'back' | 'front'];
+
     await this.sendMessageService.send({
-      content: `<@&805765119384616962>, **${prData.userGithubNick}** acabou de abrir um PR em **${prData.projectName}**!\nO ID dele é **${prData.discordId}** e, como sou um amor de pessoa (ops, bot...), vou até facilitar pra vcs :relieved:\nSó preciso que alguém rode **/me_aloca_aqui ${prData.discordId}**\nPra facilitar mais ainda, segue o link do PR: ${githubLink}\n||agora não rodem não pra ver como faço da vida de vcs um inferno :imp:||`,
+      message: {
+        content: `<@&${roleToMention}>, **${prData.userGithubNick}** acabou de abrir um PR em **${prData.projectName}**!\nO ID dele é **${prData.discordId}** e, como sou um amor de pessoa (ops, bot...), vou até facilitar pra vcs :relieved:\nSó preciso que alguém rode **/me_aloca_aqui ${prData.discordId}**\nPra facilitar mais ainda, segue o link do PR: ${githubLink}\n||agora não rodem não pra ver como faço da vida de vcs um inferno :imp:||`,
+      },
+      recipient: origin,
     });
 
     return newPr;

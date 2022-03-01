@@ -1,4 +1,5 @@
-import { SendMessageUsecase } from '@/domain/message/usecases/send-message';
+import { SendMessageUsecase } from '@/domain/message/usecases/send-message/protocols';
+import { env } from '@/main/config';
 import { makePinoLoggerLocalAdapter } from '@/main/factories/infra/logs/pino';
 import { CreatePrUsecase } from '../create-pr-in-database/protocols';
 import { ListPrsFromDatabaseRepository } from '../list-prs-from-database/protocols';
@@ -41,7 +42,16 @@ class PrsWebhookHandler implements PrWebhookHandler {
 
       if (origin !== 'back' && origin !== 'front' && origin !== undefined) {
         this.sendMessageUsecase.send({
-          content: `Ohhh <@&805765119384616962>, algum engraçadinho configurou errado o PAYLOAD do projeto **${params?.repository.name}**. Assim não dá pra fazer a mágica né... Alguém corrige lá, por favor :rolling_eyes:\nOlha o link: https://github.com/${params?.repository.full_name}/settings/hooks`,
+          message: {
+            content: `Ohhh <@&${env.bot.channels.backRole}>, algum engraçadinhe configurou errado o PAYLOAD do projeto **${params?.repository.name}**. Assim não dá pra fazer a mágica né... Alguém corrige lá, por favor :rolling_eyes:\nOlha o link: https://github.com/${params?.repository.full_name}/settings/hooks`,
+          },
+          recipient: 'back',
+        });
+        this.sendMessageUsecase.send({
+          message: {
+            content: `Ohhh <@&${env.bot.channels.frontRole}>, algum engraçadinhe configurou errado o PAYLOAD do projeto **${params?.repository.name}**. Assim não dá pra fazer a mágica né... Alguém corrige lá, por favor :rolling_eyes:\nOlha o link: https://github.com/${params?.repository.full_name}/settings/hooks`,
+          },
+          recipient: 'front',
         });
 
         throw new PrWebhookHandlerServiceError(
