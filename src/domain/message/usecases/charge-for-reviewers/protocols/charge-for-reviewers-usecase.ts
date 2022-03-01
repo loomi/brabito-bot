@@ -5,6 +5,6 @@ export interface ChargeForReviewersUsecase {
 }
 
 export namespace ChargeForReviewersUsecase {
-  export type Params = void;
+  export type Params = { origin: 'back' | 'front' };
   export type Result = void;
 }
