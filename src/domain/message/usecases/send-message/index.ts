@@ -1,2 +1,1 @@
-export * from './send-message';
-export * from './send-message-usecase';
+export * from './send-message-service';
