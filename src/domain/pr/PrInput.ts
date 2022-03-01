@@ -19,4 +19,5 @@ export type PrInput = {
   createdAt?: Date;
   updatedAt?: Date;
   lastReviewChecked?: Date;
+  origin: 'back' | 'front';
 };

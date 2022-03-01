@@ -19,4 +19,5 @@ export type PrData = {
   createdAt: Date;
   updatedAt: Date;
   lastReviewChecked: Date;
+  origin: 'back' | 'front';
 };
