@@ -26,6 +26,10 @@ export const env = {
     discordToken: process.env.DISCORD_TOKEN as string,
     channels: {
       general: process.env.GENERAL_CHANNEL_ID as string,
+      backChannel: process.env.DISCORD_BACK_CHANNEL_ID as string,
+      frontChannel: process.env.DISCORD_FRONT_CHANNEL_ID as string,
+      backRole: process.env.DISCORD_BACK_ROLE_ID as string,
+      frontRole: process.env.DISCORD_FRONT_ROLE_ID as string,
     },
   },
   databases: {
