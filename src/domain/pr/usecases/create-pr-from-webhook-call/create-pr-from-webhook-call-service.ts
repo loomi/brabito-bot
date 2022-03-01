@@ -30,6 +30,8 @@ class CreatePrFromWebhookCallService implements CreatePrFromWebhookCallUsecase {
   async create(
     prParams: CreatePrFromWebhookCallUsecase.Params
   ): Promise<CreatePrFromWebhookCallUsecase.Result> {
+    const origin = prParams.origin;
+
     const status = prParams.action || 'not_defined';
     const githubId = `${prParams.pull_request?.id}` || 'not_defined';
     const title = prParams.pull_request?.title || 'not_defined';
@@ -69,6 +71,7 @@ class CreatePrFromWebhookCallService implements CreatePrFromWebhookCallUsecase {
         userGithubNick,
         projectName,
         userId: null,
+        origin,
       },
     });
 
