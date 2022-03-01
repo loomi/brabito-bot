@@ -16,6 +16,7 @@ class Pr {
   private readonly createdAt: Date;
   private updatedAt: Date;
   private lastReviewChecked: Date;
+  private origin: 'back' | 'front';
 
   constructor(prms: { createPrParams?: PrInput; createPrFromParams?: PrData }) {
     if (
@@ -79,6 +80,9 @@ class Pr {
       prms.createPrFromParams?.lastReviewChecked ||
       prms.createPrParams?.lastReviewChecked ||
       new Date();
+
+    this.origin =
+      prms.createPrFromParams?.origin || prms.createPrParams?.origin || 'back';
   }
 
   private convertStatus(
@@ -133,6 +137,7 @@ class Pr {
       userId: this.userId,
       updatedAt: this.updatedAt,
       lastReviewChecked: this.lastReviewChecked,
+      origin: this.origin,
     };
   }
 
