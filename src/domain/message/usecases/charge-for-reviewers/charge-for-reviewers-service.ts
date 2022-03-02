@@ -77,6 +77,7 @@ export class ChargeForReviewersService implements ChargeForReviewersUsecase {
     const { prs } = await this.listPrsService.list({
       status: [prStatus],
       urgenceLevel,
+      origin,
     });
 
     const scope = {
