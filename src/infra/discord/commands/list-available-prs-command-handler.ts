@@ -1,17 +1,22 @@
 import { makeListPrService } from '@/main/factories/usecases/pr';
 import { Message } from 'discord.js';
+import { MessageOrigin } from '../helpers';
 
-export const listAvailablePrsCommandHandler = async (message: Message) => {
+export const listAvailablePrsCommandHandler = async (
+  message: Message,
+  origin: MessageOrigin
+) => {
   const listPrsService = makeListPrService();
 
   const { prs, totalPrs } = await listPrsService.list({
     status: ['not_allocated'],
     orderBy: { property: 'status', mode: 'desc' },
+    origin: origin.channel,
   });
 
   if (!totalPrs) {
     return await message.reply(
-      `Obaaa, não existem mais PRs abertos, parabéns backenders!!! :clap: :clap: :grin: :grin:\n||ps: nada mais que a obrigação de vcs tbm, né... :rolling_eyes:||`
+      `Obaaa, não existem mais PRs abertos, parabéns ${origin.channel}enders!!! :clap: :clap: :grin: :grin:\n||ps: nada mais que a obrigação de vcs tbm, né... :rolling_eyes:||`
     );
   }
   const basicHello = `Atualmente ${

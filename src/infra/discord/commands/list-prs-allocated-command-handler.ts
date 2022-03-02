@@ -1,13 +1,18 @@
 import { makeListPrService } from '@/main/factories/usecases/pr';
 import { Message } from 'discord.js';
+import { MessageOrigin } from '../helpers';
 
-export const listAllocatedPrsCommandHandler = async (message: Message) => {
+export const listAllocatedPrsCommandHandler = async (
+  message: Message,
+  origin: MessageOrigin
+) => {
   const basicHello = 'Listando a galerinha massa que tá alocada:\n';
 
   const listPrsService = makeListPrService();
 
   const { prs, totalPrs } = await listPrsService.list({
     status: ['allocated'],
+    origin: origin.channel,
   });
 
   if (!totalPrs) {
