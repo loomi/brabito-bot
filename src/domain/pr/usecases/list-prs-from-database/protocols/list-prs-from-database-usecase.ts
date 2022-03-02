@@ -21,6 +21,7 @@ export namespace ListPrsUsecase {
       property: string;
       mode: 'asc' | 'desc';
     };
+    origin?: PrData['origin'];
   };
   export type Result = { prs: Pr[]; totalPrs: number };
 }
