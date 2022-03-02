@@ -1,8 +1,11 @@
 import { makeListPrService } from '@/main/factories/usecases/pr';
 import { Message } from 'discord.js';
-import { getCmdOptions } from '../helpers';
+import { getCmdOptions, MessageOrigin } from '../helpers';
 
-export const listAllPrsCommandHandler = async (message: Message) => {
+export const listAllPrsCommandHandler = async (
+  message: Message,
+  origin: MessageOrigin
+) => {
   const listPrsService = makeListPrService();
   const { cmdOptions } = getCmdOptions(message.content);
 
@@ -41,6 +44,7 @@ export const listAllPrsCommandHandler = async (message: Message) => {
     userGithubNick,
     orderBy: { property: 'createdAt', mode: 'desc' },
     status: ['not_allocated', 'allocated', 'changes_requested', 'wip'],
+    origin: origin.channel,
   });
 
   if (!totalPrs) {
