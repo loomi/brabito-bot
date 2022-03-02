@@ -1,6 +1,7 @@
 export const availableCommands = {
   ping: 'this is a ping description...',
   whoami: 'command will mention you as reply',
+  whereami: ' command will find your location at loomiverse',
   help: 'will list all commands and their description',
   comandos: 'will list all commands and their description',
   tem_pr: ' will list all PRs with status equals to **not_allocated**',
