@@ -8,9 +8,10 @@ import {
   listCommandsCommandHandler,
   pingCommandHandler,
   whoamiCommandHandler,
+  whereamiCommandHandler,
 } from './commands';
 
-import { extractCommand } from './helpers';
+import { extractCommand, getOrigin } from './helpers';
 
 export const discordListener = async (
   message: Message<boolean>
@@ -25,14 +26,25 @@ export const discordListener = async (
   } else {
     const { command } = shouldContinue;
 
+    const origin = getOrigin(message.channelId);
+    if (origin === 'not_allowed') {
+      message.reply(
+        `<@!${message.author.id}>, não consegui calcular tua órbita... :confused:`
+      );
+      return;
+    }
+
     if (command === 'ping') await pingCommandHandler(message);
     else if (command === 'whoami') whoamiCommandHandler(message);
+    else if (command === 'whereami') whereamiCommandHandler(message, origin);
     else if (command === 'comandos') listCommandsCommandHandler(message);
     else if (command === 'help') listCommandsCommandHandler(message);
-    else if (command === 'tem_pr') listAvailablePrsCommandHandler(message);
-    else if (command === 'alocados') listAllocatedPrsCommandHandler(message);
+    else if (command === 'tem_pr')
+      listAvailablePrsCommandHandler(message, origin);
+    else if (command === 'alocados')
+      listAllocatedPrsCommandHandler(message, origin);
     else if (command === 'me_aloca_aqui')
       alloocateUserToPrCommandHandler(message);
-    else if (command === 'prs') listAllPrsCommandHandler(message);
+    else if (command === 'prs') listAllPrsCommandHandler(message, origin);
   }
 };
