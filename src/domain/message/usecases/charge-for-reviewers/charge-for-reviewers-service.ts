@@ -129,7 +129,7 @@ export class ChargeForReviewersService implements ChargeForReviewersUsecase {
           };
           const messagesForAllocated = {
             important: [
-              `<@!${user?.discordId}> sem querer pressionar, mas já precionando...\nO PR de **${projectName}** continua aberto... :grimacing:\nSe não conseguir corrigir agora, tu pode passar o PR pra outra pessoa tá, e tá tudo bem!\nOlha o link: ${githubLink}`,
+              `<@!${user?.discordId}> sem querer pressionar, mas já pressionando...\nO PR de **${projectName}** continua aberto... :grimacing:\nSe não conseguir corrigir agora, tu pode passar o PR pra outra pessoa tá, e tá tudo bem!\nOlha o link: ${githubLink}`,
               `Fala <@!${user?.discordId}> meu queride, lembra que tu tais alocado no PR de **${projectName}**, blz?? Dá uma conferida lá quando puder...\nOlha o link: ${githubLink}\n||ps: o quanto antes melhor||`,
               `<@!${user?.discordId}> só pra relembrar que tu se alocou pra corrigir o PR lá em **${projectName}**, visse!?\nOlha o link: ${githubLink}`,
               `<@!${user?.discordId}> :rose::rose: são vermelhas e violetas são azuis, mas mesmo assim o PR de **${projectName}** continua esperando sua revisão... :sweat: :wilted_rose:\nOlha o link: ${githubLink}`,
