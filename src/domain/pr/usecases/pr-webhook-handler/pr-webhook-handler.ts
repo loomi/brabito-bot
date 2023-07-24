@@ -59,6 +59,10 @@ class PrsWebhookHandler implements PrWebhookHandler {
         );
       }
 
+      const userGithubNick = params.pull_request?.user?.login;
+
+      if (userGithubNick === 'dependabot[bot]') return;
+
       const githubId = `${params.pull_request?.id}`;
 
       const { prs } = await this.listPrsFromDatabaseRepository.listPrs({
