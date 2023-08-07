@@ -38,7 +38,7 @@ jobs:
         run: echo "::set-output name=hash::$(git rev-parse --short HEAD)"
 
       - name: Build application image
-        run: docker build -t ${{ github.event.repository.name }}:staging-${{ steps.get-hash.outputs.hash }} -f Dockerfile.production .
+        run: docker build -t ${{ github.event.repository.name }}:staging-${{ steps.get-hash.outputs.hash }} -f Dockerfile.development .
 
       - name: Tag application image
         run: docker tag ${{ github.event.repository.name }}:staging-${{ steps.get-hash.outputs.hash }} 820135014097.dkr.ecr.us-east-1.amazonaws.com/${{ github.event.repository.name }}:staging-${{ steps.get-hash.outputs.hash }}
