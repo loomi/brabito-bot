@@ -1,3 +1,5 @@
+import { AvailableRoles } from '@/shared/types/roles-available';
+
 export interface ChargeForReviewersUsecase {
   chargeReviewers(
     params: ChargeForReviewersUsecase.Params
@@ -5,6 +7,6 @@ export interface ChargeForReviewersUsecase {
 }
 
 export namespace ChargeForReviewersUsecase {
-  export type Params = { origin: 'back' | 'front' };
+  export type Params = { origin: AvailableRoles };
   export type Result = void;
 }

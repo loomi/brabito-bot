@@ -51,6 +51,7 @@ async function main() {
     scheduler.schedule(() => {
       chargeForReviews.chargeReviewers({ origin: 'back' });
       chargeForReviews.chargeReviewers({ origin: 'front' });
+      chargeForReviews.chargeReviewers({ origin: 'flutter' });
       loggerLocal.logInfo(
         `Bot runnig til ${new Date().toLocaleDateString('pt-BR', {
           hour: '2-digit',

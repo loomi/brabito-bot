@@ -25,6 +25,7 @@ enum PrUrgenceLevel {
 enum PrOrigin {
   back
   front
+  flutter
 }
 
 model User {

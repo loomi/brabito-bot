@@ -6,6 +6,7 @@ import { CreatePrInDatabaseRepository } from '../create-pr-in-database/protocols
 import { CreatePrFromWebhookCallServiceError } from './errors';
 import { SendMessageUsecase } from '@/domain/message/usecases/send-message/protocols';
 import { env } from '@/main/config';
+import { AvailableRoles } from '@/shared/types/roles-available';
 
 type CreatePrInDatabaseServiceInjectables = {
   createPrInDatabaseRepository: CreatePrInDatabaseRepository;
@@ -83,8 +84,9 @@ class CreatePrFromWebhookCallService implements CreatePrFromWebhookCallUsecase {
     const getRoleToMention = {
       back: env.bot.channels.backRole,
       front: env.bot.channels.frontRole,
+      flutter: env.bot.channels.flutterRole,
     };
-    const roleToMention = getRoleToMention[origin as 'back' | 'front'];
+    const roleToMention = getRoleToMention[origin as AvailableRoles];
 
     await this.sendMessageService.send({
       message: {

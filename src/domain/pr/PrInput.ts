@@ -1,3 +1,5 @@
+import { AvailableRoles } from '@/shared/types/roles-available';
+
 export type PrInput = {
   id: string;
   title: string;
@@ -19,5 +21,5 @@ export type PrInput = {
   createdAt?: Date;
   updatedAt?: Date;
   lastReviewChecked?: Date;
-  origin: 'back' | 'front';
+  origin: AvailableRoles;
 };

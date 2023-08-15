@@ -28,8 +28,10 @@ export const env = {
       general: process.env.GENERAL_CHANNEL_ID as string,
       backChannel: process.env.DISCORD_BACK_CHANNEL_ID as string,
       frontChannel: process.env.DISCORD_FRONT_CHANNEL_ID as string,
+      flutterChannel: process.env.DISCORD_FLUTTER_CHANNEL_ID as string,
       backRole: process.env.DISCORD_BACK_ROLE_ID as string,
       frontRole: process.env.DISCORD_FRONT_ROLE_ID as string,
+      flutterRole: process.env.DISCORD_FLUTTER_ROLE_ID as string,
     },
   },
   databases: {
