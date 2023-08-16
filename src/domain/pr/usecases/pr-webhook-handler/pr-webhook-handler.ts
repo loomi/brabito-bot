@@ -40,7 +40,8 @@ class PrsWebhookHandler implements PrWebhookHandler {
       console.log('HTTP REQUEST');
       console.log(params);
 
-      if (origin !== 'back' && origin !== 'front' && origin !== undefined) {
+      const availableRoles = ['back', 'front', 'flutter', undefined];
+      if (!availableRoles.includes(origin)) {
         this.sendMessageUsecase.send({
           message: {
             content: `Ohhh <@&${env.bot.channels.backRole}>, algum engraçadinhe configurou errado o PAYLOAD do projeto **${params?.repository.name}**. Assim não dá pra fazer a mágica né... Alguém corrige lá, por favor :rolling_eyes:\nOlha o link: https://github.com/${params?.repository.full_name}/settings/hooks`,
@@ -52,6 +53,12 @@ class PrsWebhookHandler implements PrWebhookHandler {
             content: `Ohhh <@&${env.bot.channels.frontRole}>, algum engraçadinhe configurou errado o PAYLOAD do projeto **${params?.repository.name}**. Assim não dá pra fazer a mágica né... Alguém corrige lá, por favor :rolling_eyes:\nOlha o link: https://github.com/${params?.repository.full_name}/settings/hooks`,
           },
           recipient: 'front',
+        });
+        this.sendMessageUsecase.send({
+          message: {
+            content: `Ohhh <@&${env.bot.channels.flutterRole}>, algum engraçadinhe configurou errado o PAYLOAD do projeto **${params?.repository.name}**. Assim não dá pra fazer a mágica né... Alguém corrige lá, por favor :rolling_eyes:\nOlha o link: https://github.com/${params?.repository.full_name}/settings/hooks`,
+          },
+          recipient: 'flutter',
         });
 
         throw new PrWebhookHandlerServiceError(

@@ -5,6 +5,7 @@ import { ChargeForReviewersUsecase } from './protocols';
 
 import { env } from '@/main/config';
 import { UpdatePrUsecase } from '@/domain/pr/usecases/update-pr-in-database/protocols';
+import { AvailableRoles } from '@/shared/types/roles-available';
 
 export class ChargeForReviewersService implements ChargeForReviewersUsecase {
   private readonly sendMessageUsecase: SendMessageUsecase;
@@ -29,6 +30,7 @@ export class ChargeForReviewersService implements ChargeForReviewersUsecase {
     const getRoleToMention = {
       back: env.bot.channels.backRole,
       front: env.bot.channels.frontRole,
+      flutter: env.bot.channels.flutterRole,
     };
     const roleToMention = getRoleToMention[origin];
 
@@ -72,7 +74,7 @@ export class ChargeForReviewersService implements ChargeForReviewersUsecase {
     requestIntervals: number,
     scopeToHandle: 'hours' | 'minutes',
     roleToMention: string,
-    origin: 'back' | 'front'
+    origin: AvailableRoles
   ) {
     const { prs } = await this.listPrsService.list({
       status: [prStatus],

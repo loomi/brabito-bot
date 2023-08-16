@@ -9,6 +9,7 @@ class DiscordSendMessageService implements SendMessageUsecase {
     const getChannelId = {
       back: discordEnvironment.channels.backChannel,
       front: discordEnvironment.channels.frontChannel,
+      flutter: discordEnvironment.channels.flutterChannel,
     };
 
     const generalChannelId = getChannelId[recipient];

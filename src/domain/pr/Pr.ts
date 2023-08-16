@@ -1,6 +1,7 @@
 import { PrInput } from './PrInput';
 import { PrError } from './PrError';
 import { PrData } from './PrData';
+import { AvailableRoles } from '@/shared/types/roles-available';
 
 class Pr {
   private readonly id: string;
@@ -16,7 +17,7 @@ class Pr {
   private readonly createdAt: Date;
   private updatedAt: Date;
   private lastReviewChecked: Date;
-  private origin: 'back' | 'front';
+  private origin: AvailableRoles;
 
   constructor(prms: { createPrParams?: PrInput; createPrFromParams?: PrData }) {
     if (

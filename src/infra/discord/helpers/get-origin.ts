@@ -1,8 +1,9 @@
+import { AvailableRoles } from '@/shared/types/roles-available';
 import discordEnvironment from '../discord-environment';
 
 export type MessageOrigin = {
   roleToMention: string;
-  channel: 'back' | 'front';
+  channel: AvailableRoles;
 };
 
 export const getOrigin = (channelId: string): 'not_allowed' | MessageOrigin => {
@@ -15,6 +16,11 @@ export const getOrigin = (channelId: string): 'not_allowed' | MessageOrigin => {
     return {
       roleToMention: discordEnvironment.channels.frontRole,
       channel: 'front',
+    };
+  } else if (channelId === discordEnvironment.channels.flutterChannel) {
+    return {
+      roleToMention: discordEnvironment.channels.flutterRole,
+      channel: 'flutter',
     };
   } else return 'not_allowed';
 };
